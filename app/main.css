@@ -1,36 +1,209 @@
 body {
-    margin: 0%;
-    padding: 0%;
-    font-family: "Public Sans", sans-serif;
+  margin: 0%;
+  padding: 0%;
+  font-family: "Public Sans", sans-serif;
 }
 
-.header-div {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    background-color: #3CB371;
-    padding: 12px;
-    min-width: 100%;
+/* Header CSS Section */
 
+.header-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  background-color: #3cb371;
+  padding: 12px;
+  min-width: 100%;
+  height: 50px;
+  box-sizing: border-box;
 }
 
 .todo-a {
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: bold;
-    color: whitesmoke;
-    margin-left: 40px;
-    
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: bold;
+  color: whitesmoke;
+  margin-left: 10px;
 }
 
 .todo-a:hover {
-    text-decoration: underline;
-    color: whitesmoke;
+  text-decoration: underline;
+  color: whitesmoke;
 }
 
 .search-bar {
-    #search{
-        border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 40px;
+  flex: 1;
+}
+
+#search {
+  border: none;
+  border-radius: 7px;
+  height: 33px;
+  width: 400px;
+  box-sizing: border-box;
+  padding: 5px;
+  transition: all 0.05s ease-in-out;
+}
+
+#search:focus {
+  outline: none;
+  opacity: 0.8;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#search:hover {
+  height: 35px;
+  width: 402px;
+}
+
+@media screen and (max-width: 800px) {
+  #search {
+    width: 200px;
+  }
+  #search:hover {
+    height: 35px;
+    width: 205px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  #search {
+    width: 100%;
+    margin-right: auto;
+  }
+
+  #search:hover {
+    height: 100%;
+    width: 100%;
+  }
+
+  .search-bar {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* Menu CSS Section */
+#btn-profile {
+  color: whitesmoke;
+  background-color: #3cb371;
+  border: none;
+}
+
+#btn-profile:hover {
+  opacity: 0.6;
+}
+
+#btn-profile:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  color: #fff;
+  background-color: #8fbc8f;
+  margin-top: 50px;
+  transform: translateX(-200px);
+  transition: none;
+}
+
+.sidebar a {
+  display: block;
+  padding: 16px;
+  text-decoration: none;
+  font-size: 15px;
+  color: whitesmoke;
+}
+
+.sidebar a:hover {
+  background-color: darkgrey;
+}
+
+.sidebar.showinstant {
+  transform: translateX(0);
+  transition: none;
+}
+
+#btn-menu,
+#btn-menu:focus,
+#btn-menu:hover {
+  background-color: #3cb371;
+  outline: none;
+  border: none;
+}
+
+#btn-menu:active {
+  margin-top: 2px;
+}
+
+/* List CSS Section */
+
+.taskform {
+  position: fixed;
+  display: flex;
+  margin-top: 90px;
+  margin-left: 50px;
+  width: 100vw; /* set the width to 50% of the viewport width */
+  height: 100vh;
+}
+
+.taskform.move {
+  transition: none;
+  margin-left: 250px;
+  .baseAdd {
+    width: calc(100% - 300px);
+  }
+}
+
+.baseAdd {
+  position: fixed;
+  flex: 1 1 auto;
+  display: flex;
+  flex-basis: 0;
+  background-color: white;
+  align-items: center;
+  border-style: outset;
+  width: calc(100% - 100px);
+}
+
+.baseAdd-icon {
+  border-radius: 100%;
+  background-color: white;
+  border: none;
+}
+
+#baseAddInput-addTask-today {
+  flex: 1 1 auto;
+  font-size: 16px;
+  padding: 10px;
+  flex-basis: 0;
+  background-color: white;
+  width: 100%;
+  border: none;
+}
+
+#baseAddInput-addTask-today:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 500px) {
+  .sidebar {
+    width: 75px;
+  }
+
+  .taskform.move {
+    margin-left: 120px;
+    .baseAdd {
+      width: calc(100% - 175px);
     }
-    margin-left: auto;
+  }
 }

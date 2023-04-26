@@ -17,6 +17,7 @@
     "@babel/preset-react": "^7.18.6",
     "axios": "^0.27.2",
     "babel-loader": "^8.2.5",
+    "bootstrap-icons": "^1.10.4",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.3",
     "dotenv-webpack": "^8.0.1",
