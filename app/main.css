@@ -215,7 +215,7 @@ body {
 }
 
 .addedTask {
-  margin-top: 80px;
+  margin-top: 65px;
   padding-right: 300px;
 
   .lTask {
@@ -225,7 +225,7 @@ body {
   }
 
   .iTask {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     flex: 1 1 auto;
     display: flex;
     flex-basis: 0;
@@ -237,4 +237,9 @@ body {
     height: 50px;
     width: calc(100vw - 100px);
   }
+}
+
+#testehead {
+  margin-top: 65px;
+  padding-right: 300px;
 }
