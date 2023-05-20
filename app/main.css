@@ -110,7 +110,7 @@ body {
   width: 200px;
   height: 100%;
   color: #fff;
-  background-color: #8fbc8f;
+  background-color: #8bb99d;
   margin-top: 50px;
   transform: translateX(-200px);
   transition: none;
@@ -150,21 +150,18 @@ body {
 .taskform {
   position: fixed;
   display: flex;
-  margin-top: 90px;
-  margin-left: 50px;
-  width: 100vw; /* set the width to 50% of the viewport width */
-  height: 100vh;
+  margin-top: 100px;
+  width: calc(100vw - 50px); /* set the width to 50% of the viewport width */
+  height: calc(100vh - 260px);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.taskform.move {
-  transition: none;
-  margin-left: 250px;
-  .baseAdd {
-    width: calc(100% - 300px);
-  }
-  .iTask {
-    width: calc(100vw - 300px);
-  }
+#myForm {
+  position: fixed;
+  display: flex;
+  margin-top: 90px;
+  margin-left: 50px;
 }
 
 .baseAdd {
@@ -173,18 +170,47 @@ body {
   display: flex;
   flex-basis: 0;
   background-color: white;
+  border-color: silver;
   align-items: center;
   border-style: outset;
-  border-width: 2px;
-  border-radius: 5px;
+  border-width: 3px;
+  border-radius: 30px;
   height: 50px;
   width: calc(100% - 100px);
 }
 
+.taskform.move {
+  transition: none;
+  margin-left: 200px;
+  width: calc(100vw - 250px);
+  .baseAdd {
+    width: calc(100% - 300px);
+  }
+  .iTask {
+    width: calc(100vw - 300px);
+  }
+}
+
+.headingDay.move {
+  margin-left: 200px;
+  width: calc(100vw - 250px);
+  .baseAdd {
+    width: calc(100% - 300px);
+  }
+}
+
 .baseAdd-icon {
-  border-radius: 100%;
-  background-color: white;
-  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding: 0; /* Remove any padding */
+  background: none; /* Set the background to none */
+  border: none; /* Remove the border */
+  cursor: pointer; /* Add cursor pointer to indicate interactivity */
 }
 
 #baseAddInput-addTask-today {
@@ -212,31 +238,92 @@ body {
       width: calc(100% - 175px);
     }
   }
+
+  .headingDay.move {
+    margin-left: 120px;
+    width: calc(100vw - 250px);
+    .baseAdd {
+      width: calc(100% - 300px);
+    }
+  }
 }
 
 .addedTask {
-  margin-top: 65px;
   padding-right: 300px;
 
   .lTask {
     list-style-type: none;
-    margin: 0;
+    margin-right: 0;
     padding: 0;
   }
 
   .iTask {
+    position: relative; /* Add relative positioning */
+    padding-right: 80px;
     margin-bottom: 5px;
     flex: 1 1 auto;
     display: flex;
     flex-basis: 0;
     background-color: white;
+    border-color: silver;
     align-items: center;
     border-style: outset;
-    border-width: 2px;
-    border-radius: 5px;
-    height: 50px;
+    border-width: 3px;
+    border-radius: 30px;
     width: calc(100vw - 100px);
+    min-height: 50px;
+    overflow: auto;
+    word-break: break-all;
+    overflow-wrap: break-word;
   }
+}
+
+.iTask:hover {
+  background-color: lavender;
+  transition: all 0.1s ease-in-out;
+  transform: translate3d(7px, 0, 0);
+}
+
+.taskContent {
+  flex-grow: 1;
+}
+
+.buttonContainer {
+  position: absolute;
+  right: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.taskEdit,
+.taskDelete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  padding: 0; /* Remove any padding */
+  background: none; /* Set the background to none */
+  border: none; /* Remove the border */
+  cursor: pointer; /* Add cursor pointer to indicate interactivity */
+}
+
+.taskEdit svg,
+.taskDelete svg {
+  width: 100%; /* Make the SVG take up the full width of the button */
+  height: 100%; /* Make the SVG take up the full height of the button */
+  fill: currentColor; /* Inherit the color from the parent element */
+}
+
+.taskEdit:hover svg {
+  fill: #3cb371;
+}
+.taskDelete:hover svg {
+  fill: crimson;
 }
 
 #testehead {

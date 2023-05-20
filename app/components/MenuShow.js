@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector("#myForm");
+  const form = document.querySelector(".headingDay");
   const sidebar = document.querySelector(".sidebar");
   const taskform = document.querySelector(".taskform");
 
@@ -9,11 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (isToggled && listToggled) {
     sidebar.classList.add("showinstant");
     taskform.classList.add("move");
+    form.classList.add("move");
   }
 
   document.querySelector("#btn-menu").onclick = function () {
     sidebar.classList.toggle("showinstant");
     taskform.classList.toggle("move");
+    form.classList.toggle("move");
     localStorage.setItem("isToggled", sidebar.classList.contains("showinstant"));
     localStorage.setItem("listToggled", taskform.classList.contains("move"));
   };
