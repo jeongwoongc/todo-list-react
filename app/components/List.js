@@ -11,12 +11,10 @@ function List() {
   }
 
   function handleSubmit(e) {
-    if (!inputValue) return;
     e.preventDefault();
+    if (!inputValue) return;
     setList([inputValue, ...list]);
     setInputValue("");
-    
-
   }
 
   const handleComplete = index => {
@@ -48,12 +46,14 @@ function List() {
   };
 
   const handleDelete = index => {
+    index.preventDefault();
     const newList = [...list];
     newList.splice(index, 1);
     setList(newList);
   };
 
   const handleDeleteCompleted = index => {
+    index.preventDefault();
     const newCompletedList = [...completedList];
     newCompletedList.splice(index, 1);
     setCompletedList(newCompletedList);
