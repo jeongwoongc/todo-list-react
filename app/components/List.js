@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 function List() {
   const [inputValue, setInputValue] = useState("");
+  const [listItem, setListItem] = useState("");
   const [list, setList] = useState([]);
   const [completedList, setCompletedList] = useState([]);
   const [showCompleted, setShowCompleted] = useState(false);
@@ -91,7 +92,7 @@ function List() {
 
   return (
     <div className="mainSection">
-      <form id="myForm" onSubmit={handleSubmit}>
+      <form className="myForm" onSubmit={handleSubmit}>
         <div className="headingDay">
           <h2 className="myDay">My Day</h2>
           <div className="baseAdd">

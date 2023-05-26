@@ -2,6 +2,7 @@ body {
   margin: 0%;
   padding: 0%;
   font-family: "Public Sans", sans-serif;
+  background-color: lavenderblush;
 }
 
 /* Header CSS Section */
@@ -11,7 +12,7 @@ body {
   justify-content: space-between;
   align-items: center;
   position: absolute;
-  background-color: #3cb371;
+  background-color: #000000de;
   padding: 12px;
   min-width: 100%;
   height: 50px;
@@ -35,63 +36,55 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 40px;
+  margin-right: 40px;
+  margin-left: 40px;
   flex: 1;
 }
 
 #search {
-  border: none;
-  border-radius: 7px;
+  border-radius: 5px;
+  border-width: 2px;
+  background-color:whitesmoke;
   height: 33px;
-  width: 400px;
+  width: 680px;
+  border-style: none;
   box-sizing: border-box;
   padding: 5px;
-  transition: all 0.05s ease-in-out;
 }
 
 #search:focus {
   outline: none;
-  opacity: 0.8;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  background-color: lightgrey;
+  transition: all 0.1s ease-in-out;
 }
 
 #search:hover {
-  height: 35px;
-  width: 402px;
+  opacity: 0.8;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 900px) {
   #search {
-    width: 200px;
-  }
-  #search:hover {
-    height: 35px;
-    width: 205px;
+    width: calc(100% - 100px);
   }
 }
 
 @media screen and (max-width: 450px) {
   #search {
-    width: 100%;
+    width: calc(100% - 5px);
     margin-right: auto;
   }
 
-  #search:hover {
-    height: 100%;
-    width: 100%;
-  }
-
   .search-bar {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
 /* Menu CSS Section */
 #btn-profile {
   color: whitesmoke;
-  background-color: #3cb371;
   border: none;
+  background: transparent;
 }
 
 #btn-profile:hover {
@@ -107,13 +100,14 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 200px;
-  height: 100%;
+  width: 180px;
+  height: calc(100vh - 50px);
   color: #fff;
-  background-color: #8bb99d;
+  border-bottom-right-radius: 20px;
+  background-color: #121312e5;
   margin-top: 50px;
   transform: translateX(-200px);
-  transition: none;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.1s;
 }
 
 .sidebar a {
@@ -125,18 +119,18 @@ body {
 }
 
 .sidebar a:hover {
-  background-color: darkgrey;
+  background-color: rgb(36, 34, 34);
 }
 
 .sidebar.showinstant {
   transform: translateX(0);
-  transition: none;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
 }
 
 #btn-menu,
 #btn-menu:focus,
 #btn-menu:hover {
-  background-color: #3cb371;
+  background: transparent;
   outline: none;
   border: none;
 }
@@ -147,21 +141,25 @@ body {
 
 /* List CSS Section */
 
+.myForm {
+  position: fixed;
+  display: flex;
+  margin-top: 90px;
+  margin-left: 40px;
+}
+
+.myForm.move {
+  margin-left: 220px;
+}
+
 .taskform {
   position: fixed;
   display: flex;
   margin-top: 100px;
-  width: calc(100vw - 50px); /* set the width to 50% of the viewport width */
+  width: calc(100vw - 40px); /* set the width to 50% of the viewport width */
   height: calc(100vh - 260px);
   overflow-y: auto;
   overflow-x: hidden;
-}
-
-#myForm {
-  position: fixed;
-  display: flex;
-  margin-top: 90px;
-  margin-left: 50px;
 }
 
 .baseAdd {
@@ -174,20 +172,19 @@ body {
   align-items: center;
   border-style: outset;
   border-width: 2px;
-  border-radius: 10px;
+  border-radius: 5px;
   height: 50px;
   width: calc(100% - 100px);
 }
 
 .taskform.move {
   transition: none;
-  margin-left: 200px;
-  width: calc(100vw - 250px);
+  width: calc(100vw - 220px);
   .baseAdd {
     width: calc(100% - 300px);
   }
   .iTask {
-    width: calc(100vw - 300px);
+    width: calc(100vw - 280px);
   }
 }
 
@@ -197,10 +194,9 @@ body {
 }
 
 .headingDay.move {
-  margin-left: 200px;
   width: calc(100vw - 250px);
   .baseAdd {
-    width: calc(100% - 300px);
+    width: calc(100% - 280px);
   }
 }
 
@@ -213,7 +209,7 @@ body {
   margin-left: 15px;
   margin-right: 15px;
   padding: 0; /* Remove any padding */
-  background: none; /* Set the background to none */
+  background: transparent; /* Set the background to none */
   border: none; /* Remove the border */
   cursor: pointer; /* Add cursor pointer to indicate interactivity */
 }
@@ -231,27 +227,6 @@ body {
 
 #baseAddInput-addTask-today:focus {
   outline: none;
-}
-
-@media screen and (max-width: 500px) {
-  .sidebar {
-    width: 75px;
-  }
-
-  .taskform.move {
-    margin-left: 120px;
-    .baseAdd {
-      width: calc(100% - 175px);
-    }
-  }
-
-  .headingDay.move {
-    margin-left: 120px;
-    width: calc(100vw - 250px);
-    .baseAdd {
-      width: calc(100% - 300px);
-    }
-  }
 }
 
 .addedTask {
@@ -277,13 +252,38 @@ body {
     align-items: center;
     border-style: outset;
     border-width: 2px;
-    border-radius: 10px;
+    border-radius: 5px;
     width: calc(100vw - 100px);
     min-height: 50px;
     overflow: auto;
     word-break: break-all;
     overflow-wrap: break-word;
   }
+}
+
+@media screen and (max-width: 500px) {
+  .sidebar {
+    width: 75px;
+  }
+
+  .myForm.move {
+    margin-left: 115px;
+  }
+
+  .taskform.move {
+    width: calc(100vw - 115px);
+    .iTask {
+      width: calc(100vw - 175px);
+    }
+  }
+
+  .headingDay.move {
+    width: calc(100vw - 125px);
+    .baseAdd {
+      width: calc(100% - 175px);
+    }
+  }
+
 }
 
 .iTask:hover {

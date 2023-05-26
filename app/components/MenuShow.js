@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".headingDay");
   const sidebar = document.querySelector(".sidebar");
   const taskform = document.querySelector(".taskform");
+  const myForm = document.querySelector(".myForm");
 
   const isToggled = localStorage.getItem("isToggled") === "true";
   const listToggled = localStorage.getItem("listToggled") === "true";
@@ -10,12 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
     sidebar.classList.add("showinstant");
     taskform.classList.add("move");
     form.classList.add("move");
+    myForm.classList.add("move");
   }
 
   document.querySelector("#btn-menu").onclick = function () {
     sidebar.classList.toggle("showinstant");
     taskform.classList.toggle("move");
     form.classList.toggle("move");
+    myForm.classList.toggle("move");
     localStorage.setItem("isToggled", sidebar.classList.contains("showinstant"));
     localStorage.setItem("listToggled", taskform.classList.contains("move"));
   };
