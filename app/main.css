@@ -191,6 +191,11 @@ body {
   }
 }
 
+.headingDay {
+  margin-top: 4px;
+  padding-left: 10px;
+}
+
 .headingDay.move {
   margin-left: 200px;
   width: calc(100vw - 250px);
@@ -251,6 +256,7 @@ body {
 
 .addedTask {
   padding-right: 300px;
+  padding-left: 10px;
 
   .lTask {
     list-style-type: none;
@@ -260,8 +266,9 @@ body {
 
   .iTask {
     position: relative; /* Add relative positioning */
-    padding-right: 80px;
-    margin-bottom: 5px;
+    padding-right: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     flex: 1 1 auto;
     display: flex;
     flex-basis: 0;
@@ -280,9 +287,11 @@ body {
 }
 
 .iTask:hover {
-  background-color: lavender;
-  transition: all 0.1s ease-in-out;
-  transform: translate3d(7px, 0, 0);
+  background-color: silver;
+  transition: all 0.15s ease-in-out;
+  transform: translate3d(-3px, -3px, 0);
+  box-shadow: 3px 3px 0 0 silver;
+  cursor: pointer;
 }
 
 .taskContent {
@@ -299,7 +308,6 @@ body {
   flex-shrink: 0;
 }
 
-.taskEdit,
 .taskDelete {
   display: flex;
   align-items: center;
@@ -313,16 +321,12 @@ body {
   cursor: pointer; /* Add cursor pointer to indicate interactivity */
 }
 
-.taskEdit svg,
 .taskDelete svg {
   width: 100%; /* Make the SVG take up the full width of the button */
   height: 100%; /* Make the SVG take up the full height of the button */
   fill: currentColor; /* Inherit the color from the parent element */
 }
 
-.taskEdit:hover svg {
-  fill: #3cb371;
-}
 .taskDelete:hover svg {
   fill: crimson;
 }
