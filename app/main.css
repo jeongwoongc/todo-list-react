@@ -44,7 +44,7 @@ body {
 #search {
   border-radius: 5px;
   border-width: 2px;
-  background-color:whitesmoke;
+  background-color: whitesmoke;
   height: 33px;
   width: 680px;
   border-style: none;
@@ -96,6 +96,23 @@ body {
   box-shadow: none;
 }
 
+#btn-menu,
+#btn-menu:focus,
+#btn-menu:hover {
+  background: transparent;
+  outline: none;
+  border: none;
+}
+
+#btn-menu:hover {
+  transform: translateY(-2px);
+  transition: cubic-bezier(0.39, 0.575, 0.565, 1) 0.2s;
+}
+
+#btn-menu:active {
+margin-bottom: -5px;
+}
+
 .sidebar {
   position: fixed;
   top: 0;
@@ -119,24 +136,15 @@ body {
 }
 
 .sidebar a:hover {
-  background-color: rgb(36, 34, 34);
+  background-color: rgb(77, 74, 74);
+  border-radius: 6px;
+  transform: translate3d(5px, 5px, 0);
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
 }
 
 .sidebar.showinstant {
   transform: translateX(0);
   transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
-}
-
-#btn-menu,
-#btn-menu:focus,
-#btn-menu:hover {
-  background: transparent;
-  outline: none;
-  border: none;
-}
-
-#btn-menu:active {
-  margin-top: 2px;
 }
 
 /* List CSS Section */
@@ -261,6 +269,27 @@ body {
   }
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 @media screen and (max-width: 500px) {
   .sidebar {
     width: 75px;
@@ -283,7 +312,6 @@ body {
       width: calc(100% - 175px);
     }
   }
-
 }
 
 .iTask:hover {
