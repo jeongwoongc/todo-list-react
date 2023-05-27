@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import EditableList from "./EditPop";
 
 function List() {
   const [inputValue, setInputValue] = useState("");
-  const [listItem, setListItem] = useState("");
+  const [listItems, setListItems] = useState("");
   const [list, setList] = useState([]);
   const [completedList, setCompletedList] = useState([]);
   const [showCompleted, setShowCompleted] = useState(false);
@@ -17,6 +18,10 @@ function List() {
     setList([inputValue, ...list]);
     setInputValue("");
   }
+
+  const updateList = (updatedItems) => {
+    setListItems(updatedItems);
+  };
 
   const handleComplete = index => {
     const newList = [...list];
@@ -47,7 +52,6 @@ function List() {
   };
 
   const handleDelete = index => {
-    index.preventDefault();
     const newList = [...list];
     newList.splice(index, 1);
     setList(newList);
@@ -125,6 +129,12 @@ function List() {
                       </svg>
                     </button>
                   </div>
+                  <EditableList
+                    item={item}
+                    index={index}
+                    updateList={updateList}
+                    handleDelete={handleDelete}
+                  />
                 </li>
               ))}
             </ul>
@@ -135,7 +145,7 @@ function List() {
                   <li key={index} className="iTask">
                     {" "}
                     <button className="baseAdd-icon addTask" type="button" aria-label="Add a task" tabIndex="0" onClick={() => handleCompleted(index)}>
-                      <svg class="fluentIcon ___12fm75w f1w7gpdv fez10in fg4l7m0" fill="currentColor" aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                      <svg className="fluentIcon ___12fm75w f1w7gpdv fez10in fg4l7m0" fill="currentColor" aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" focusable="false">
                         <path d="M10 2a8 8 0 110 16 8 8 0 010-16zm3.36 5.65a.5.5 0 00-.64-.06l-.07.06L9 11.3 7.35 9.65l-.07-.06a.5.5 0 00-.7.7l.07.07 2 2 .07.06c.17.11.4.11.56 0l.07-.06 4-4 .07-.08a.5.5 0 00-.06-.63z" fill="currentColor"></path>
                       </svg>
                     </button>
