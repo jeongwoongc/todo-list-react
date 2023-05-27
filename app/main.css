@@ -336,6 +336,7 @@ margin-bottom: -5px;
   flex-shrink: 0;
 }
 
+.taskEdit,
 .taskDelete {
   display: flex;
   align-items: center;
@@ -349,6 +350,7 @@ margin-bottom: -5px;
   cursor: pointer; /* Add cursor pointer to indicate interactivity */
 }
 
+.taskEdit svg,
 .taskDelete svg {
   width: 100%; /* Make the SVG take up the full width of the button */
   height: 100%; /* Make the SVG take up the full height of the button */
@@ -357,6 +359,10 @@ margin-bottom: -5px;
 
 .taskDelete:hover svg {
   fill: crimson;
+}
+
+.taskEdit:hover svg {
+  fill: blueviolet;
 }
 
 #testehead {

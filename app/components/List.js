@@ -4,6 +4,7 @@ import EditableList from "./EditPop";
 function List() {
   const [inputValue, setInputValue] = useState("");
   const [listItems, setListItems] = useState("");
+  const [editIndex, setEditIndex] = useState(-1);
   const [list, setList] = useState([]);
   const [completedList, setCompletedList] = useState([]);
   const [showCompleted, setShowCompleted] = useState(false);
@@ -19,11 +20,8 @@ function List() {
     setInputValue("");
   }
 
-  const updateList = (updatedItems) => {
-    setListItems(updatedItems);
-  };
-
   const handleComplete = index => {
+    setEditIndex(index);
     const newList = [...list];
     setCompletedList([newList[index], ...completedList]);
 
@@ -38,6 +36,7 @@ function List() {
   };
 
   const handleCompleted = index => {
+    setEditIndex(index);
     const newCompletedList = [...completedList];
     setList([newCompletedList[index], ...list]);
     newCompletedList.splice(index, 1);
@@ -51,6 +50,10 @@ function List() {
     setCompletedList(newCompletedList);
   };
 
+  const handleEdit = index => {
+    setEditIndex(index);
+  };
+
   const handleDelete = index => {
     const newList = [...list];
     newList.splice(index, 1);
@@ -62,6 +65,16 @@ function List() {
     const newCompletedList = [...completedList];
     newCompletedList.splice(index, 1);
     setCompletedList(newCompletedList);
+  };
+
+  const handleEditChange = (e, index) => {
+    const newList = [...list];
+    newList[index] = e.target.value;
+    setList(newList);
+  };
+
+  const handleSave = () => {
+    setEditIndex(-1);
   };
 
   useEffect(() => {
@@ -113,28 +126,32 @@ function List() {
             <ul className="lTask">
               {list.map((item, index) => (
                 <li key={index} className="iTask">
-                  {" "}
                   <button className="baseAdd-icon addTask" type="button" aria-label="Add a task" tabIndex="0" onClick={() => handleComplete(index)}>
                     <svg className="fluentIcon ___12fm75w f1w7gpdv fez10in fg4l7m0" fill="currentColor" aria-hidden="true" width="20" height="30" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path d="M10 3a7 7 0 100 14 7 7 0 000-14zm-8 7a8 8 0 1116 0 8 8 0 01-16 0z" fill="currentColor"></path>
                     </svg>
-                  </button>
-                  {item}
-                  <div className="buttonContainer">
-                    <button hidden></button>
-                    <button className="taskDelete" onClick={handleDelete}>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
-                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-                      </svg>
-                    </button>
-                  </div>
-                  <EditableList
-                    item={item}
-                    index={index}
-                    updateList={updateList}
-                    handleDelete={handleDelete}
-                  />
+                  </button>{" "}
+                  {editIndex === index ? (
+                    <input type="text" value={item} onChange={e => handleEditChange(e, index)} onBlur={handleSave} />
+                  ) : (
+                    <>
+                      {item}
+                      <div className="buttonContainer">
+                        <button className="taskEdit" onClick={() => handleEdit(index)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                          </svg>
+                        </button>
+                        <button className="taskDelete" onClick={handleDelete}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                          </svg>
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </li>
               ))}
             </ul>

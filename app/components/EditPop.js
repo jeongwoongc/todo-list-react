@@ -24,7 +24,7 @@ function EditableList({ item, index, updateList, handleDelete }) {
     handleDelete(index);
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setEditedValue(e.target.value);
   };
 
@@ -32,12 +32,7 @@ function EditableList({ item, index, updateList, handleDelete }) {
     <div className="editableList">
       {isEditing ? (
         <>
-          <input
-            className="editInput"
-            type="text"
-            value={editedValue}
-            onChange={handleChange}
-          />
+          <input className="editInput" type="text" value={editedValue} onChange={handleChange} />
           <div className="editButtons">
             <button className="editButton" onClick={handleSave}>
               Save
@@ -54,9 +49,6 @@ function EditableList({ item, index, updateList, handleDelete }) {
             <button className="editButton" onClick={handleEdit}>
               Edit
             </button>
-            <button className="editButton" onClick={handleDeleteItem}>
-              Delete
-            </button>
           </div>
         </>
       )}
@@ -65,4 +57,3 @@ function EditableList({ item, index, updateList, handleDelete }) {
 }
 
 export default EditableList;
-
