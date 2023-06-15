@@ -390,7 +390,7 @@ body {
     background-color: rgb(77, 74, 74);
     border-radius: 6px;
     transform: translate3d(0, 1px, 0);
-    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.1s;
   }
 
   .myForm.move {

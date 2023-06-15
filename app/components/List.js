@@ -136,9 +136,13 @@ function List() {
     const headingDay = document.querySelector(".headingDay");
 
     if (sidebarState === "true") {
-      myForm.classList.add("move");
       taskform.classList.add("move");
       headingDay.classList.add("move");
+      myForm.classList.add("move");
+    } else {
+      taskform.classList.remove("move");
+      headingDay.classList.remove("move");
+      myForm.classList.remove("move");
     }
   });
 
