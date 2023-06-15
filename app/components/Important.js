@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import DateTimeDisplay from "./DateTime";
 
-function List() {
+function Important() {
   const [inputValue, setInputValue] = useState("");
   const [editIndex, setEditIndex] = useState(-1);
   const [list, setList] = useState([]);
@@ -100,25 +100,25 @@ function List() {
   }, [inputValue]);
 
   useEffect(() => {
-    const data = localStorage.getItem("list");
+    const data = localStorage.getItem("importantList");
     if (data) {
       setList(JSON.parse(data));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("list", JSON.stringify(list));
+    localStorage.setItem("importantList", JSON.stringify(list));
   });
 
   useEffect(() => {
-    const data = localStorage.getItem("completedList");
+    const data = localStorage.getItem("importantCompletedList");
     if (data) {
       setCompletedList(JSON.parse(data));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("completedList", JSON.stringify(completedList));
+    localStorage.setItem("importantCompletedList", JSON.stringify(completedList));
   });
 
   useEffect(() => {
@@ -129,28 +129,16 @@ function List() {
     }
   }, [completedList]);
 
-  useEffect(() => {
-    const sidebarState = localStorage.getItem("isToggled");
-    const myForm = document.querySelector(".myForm");
-    const taskform = document.querySelector(".taskform");
-    const headingDay = document.querySelector(".headingDay");
-
-    if (sidebarState === "true") {
-      myForm.classList.add("move");
-      taskform.classList.add("move");
-      headingDay.classList.add("move");
-    }
-  });
-
   return (
     <div className="mainSection">
-      <form className="myForm" onSubmit={handleSubmit}>
-        <div className="headingDay">
+      <form className="myForm move" onSubmit={handleSubmit}>
+        <div className="headingDay move">
           <h2 className="myDay">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-sun" viewBox="0 0 16 16">
-              <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-exclamation-circle" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+              <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
             </svg>{" "}
-            My Day
+            Important
           </h2>
           <DateTimeDisplay />
           <div className="baseAdd">
@@ -229,4 +217,4 @@ function List() {
   );
 }
 
-export default List;
+export default Important;

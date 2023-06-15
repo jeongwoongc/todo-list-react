@@ -1,8 +1,14 @@
 body {
   margin: 0%;
   padding: 0%;
-  font-family: "Public Sans", sans-serif;
-  background-color: lavenderblush;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  background-color: #f5f5f5;
+  background: url("./background.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
 }
 
 /* Header CSS Section */
@@ -12,16 +18,18 @@ body {
   justify-content: space-between;
   align-items: center;
   position: absolute;
-  background-color: #000000de;
+  background-image: radial-gradient(circle, #0f2027, #203a436e, #2c53648a);
   padding: 12px;
   min-width: 100%;
   height: 50px;
   box-sizing: border-box;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1;
 }
 
 .todo-a {
   text-decoration: none;
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: bold;
   color: whitesmoke;
   margin-left: 10px;
@@ -30,6 +38,13 @@ body {
 .todo-a:hover {
   text-decoration: underline;
   color: whitesmoke;
+}
+
+.dis {
+  margin-right: 20px;
+  color: #eeeeee;
+  background: transparent;
+  transition: all 0.5s ease-in-out;
 }
 
 .search-bar {
@@ -46,37 +61,26 @@ body {
   border-width: 2px;
   background-color: whitesmoke;
   height: 33px;
-  width: 680px;
+  width: 600px;
   border-style: none;
   box-sizing: border-box;
   padding: 5px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
 }
 
 #search:focus {
   outline: none;
   background-color: lightgrey;
-  transition: all 0.1s ease-in-out;
 }
 
 #search:hover {
   opacity: 0.8;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
   #search {
     width: calc(100% - 100px);
-  }
-}
-
-@media screen and (max-width: 450px) {
-  #search {
-    width: calc(100% - 5px);
-    margin-right: auto;
-  }
-
-  .search-bar {
-    padding-left: 0;
-    padding-right: 0;
   }
 }
 
@@ -87,7 +91,13 @@ body {
   background: transparent;
 }
 
-#btn-profile:hover {
+#dropdownMenuButton {
+  background: transparent;
+  border: none;
+  color: whitesmoke;
+}
+
+#dropdownMenuButton:hover {
   opacity: 0.6;
 }
 
@@ -99,9 +109,19 @@ body {
 #btn-menu,
 #btn-menu:focus,
 #btn-menu:hover {
-  background: transparent;
-  outline: none;
-  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; /* Remove any padding */
+  background: none; /* Set the background to none */
+  border: none; /* Remove the border */
+  cursor: pointer; /* Add cursor pointer to indicate interactivity */
+}
+
+#btn-menu svg {
+  width: 100%;
+  height: 100%;
+  fill: whitesmoke;
 }
 
 #btn-menu:hover {
@@ -110,7 +130,7 @@ body {
 }
 
 #btn-menu:active {
-margin-bottom: -5px;
+  margin-bottom: -5px;
 }
 
 .sidebar {
@@ -120,23 +140,39 @@ margin-bottom: -5px;
   width: 180px;
   height: calc(100vh - 50px);
   color: #fff;
+  border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  background-color: #121312e5;
+  background-image: radial-gradient(circle, #0f2027, #203a436e, #2c53648a);
   margin-top: 50px;
   transform: translateX(-200px);
   transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.1s;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .sidebar a {
   display: block;
+  font-size: 1rem;
   padding: 16px;
   text-decoration: none;
-  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
   color: whitesmoke;
 }
 
+/* sidebar-divider most optimal settings */
+.sidebar-divider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-top: 1px solid #fff;
+  width: 80%;
+  margin-left: 10%;
+}
+
 .sidebar a:hover {
-  background-color: rgb(77, 74, 74);
+  background-image: linear-gradient(to right, #d4446f, #227b99, #2c5364);
   border-radius: 6px;
   transform: translate3d(5px, 5px, 0);
   transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
@@ -163,9 +199,9 @@ margin-bottom: -5px;
 .taskform {
   position: fixed;
   display: flex;
-  margin-top: 100px;
+  margin-top: 160px;
   width: calc(100vw - 40px); /* set the width to 50% of the viewport width */
-  height: calc(100vh - 260px);
+  height: calc(100vh - 310px);
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -175,12 +211,12 @@ margin-bottom: -5px;
   flex: 1 1 auto;
   display: flex;
   flex-basis: 0;
-  background-color: white;
-  border-color: silver;
+  background-color: rgba(67, 164, 255, 0.178);
+  border-color: rgba(192, 192, 192, 0.76);
   align-items: center;
-  border-style: outset;
+  border-style: none;
   border-width: 2px;
-  border-radius: 5px;
+  border-radius: 13px;
   height: 50px;
   width: calc(100% - 100px);
 }
@@ -192,6 +228,9 @@ margin-bottom: -5px;
     width: calc(100% - 300px);
   }
   .iTask {
+    width: calc(100vw - 280px);
+  }
+  .iTaskCompleted {
     width: calc(100vw - 280px);
   }
 }
@@ -222,13 +261,36 @@ margin-bottom: -5px;
   cursor: pointer; /* Add cursor pointer to indicate interactivity */
 }
 
+.iTask button svg path.check {
+  stroke-dasharray: 18;
+  stroke-dashoffset: 18;
+  fill: transparent;
+  transition: fill 0.2s ease-in-out; /* Add a transition for the fill property */
+}
+
+.iTask button:hover svg path {
+  fill: black; /* Change the fill color on hover */
+  animation: fillCheckMark 0.5s ease-in-out forwards; /* Apply the check mark animation on hover */
+}
+
+@keyframes fillCheckMark {
+  0% {
+    stroke-dashoffset: 18;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
 #baseAddInput-addTask-today {
   flex: 1 1 auto;
   font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
   padding: 10px;
   margin-right: 10px;
   flex-basis: 0;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0);
   width: 100%;
   border: none;
 }
@@ -249,23 +311,46 @@ margin-bottom: -5px;
 
   .iTask {
     position: relative; /* Add relative positioning */
-    padding-right: 50px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding-right: 100px;
+    margin-top: 3px;
+    margin-bottom: 9px;
     flex: 1 1 auto;
     display: flex;
     flex-basis: 0;
-    background-color: white;
-    border-color: silver;
+    background-color: rgba(255, 255, 255, 0.384);
+    border-color: none;
     align-items: center;
-    border-style: outset;
+    border-style: none;
     border-width: 2px;
-    border-radius: 5px;
+    border-radius: 13px;
     width: calc(100vw - 100px);
     min-height: 50px;
     overflow: auto;
     word-break: break-all;
     overflow-wrap: break-word;
+  }
+
+  .iTaskCompleted {
+    position: relative; /* Add relative positioning */
+    padding-right: 100px;
+    margin-top: 9px;
+    margin-bottom: 9px;
+    flex: 1 1 auto;
+    display: flex;
+    flex-basis: 0;
+    background-color: rgba(255, 255, 255, 0.384);
+    border-color: silver;
+    align-items: center;
+    border-style: none;
+    border-width: 2px;
+    border-radius: 13px;
+    width: calc(100vw - 100px);
+    min-height: 50px;
+    overflow: auto;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    text-decoration: line-through;
+    color: #161616;
   }
 }
 
@@ -276,7 +361,7 @@ margin-bottom: -5px;
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f1f1f100;
 }
 
 /* Handle */
@@ -290,36 +375,58 @@ margin-bottom: -5px;
   background: #555;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
   .sidebar {
-    width: 75px;
+    width: 60px;
+  }
+
+  .sidebar a {
+    padding: 10px 0px 10px 0px;
+    padding-left: 15px;
+    font-size: 0px;
+  }
+
+  .sidebar a:hover {
+    background-color: rgb(77, 74, 74);
+    border-radius: 6px;
+    transform: translate3d(0, 1px, 0);
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
   }
 
   .myForm.move {
-    margin-left: 115px;
+    margin-left: 100px;
   }
 
   .taskform.move {
-    width: calc(100vw - 115px);
+    width: calc(100vw - 100px);
     .iTask {
-      width: calc(100vw - 175px);
+      width: calc(100vw - 165px);
+    }
+    .iTaskCompleted {
+      width: calc(100vw - 165px);
     }
   }
 
   .headingDay.move {
-    width: calc(100vw - 125px);
+    width: calc(100vw - 115px);
     .baseAdd {
-      width: calc(100% - 175px);
+      width: calc(100% - 165px);
     }
   }
 }
 
 .iTask:hover {
-  background-color: silver;
+  background-image: linear-gradient(to right, #f1f1f194, #ff276825);
   transition: all 0.15s ease-in-out;
   transform: translate3d(-3px, -3px, 0);
-  box-shadow: 3px 3px 0 0 silver;
-  cursor: pointer;
+  box-shadow: 3px 3px 0 0 rgba(255, 60, 118, 0.699);
+}
+
+.iTaskCompleted:hover {
+  background-image: linear-gradient(to right, #f1f1f194, #ff276825);
+  transition: all 0.15s ease-in-out;
+  transform: translate3d(-3px, -3px, 0);
+  box-shadow: 3px 3px 0 0 rgba(255, 60, 118, 0.699);
 }
 
 .taskContent {
@@ -358,14 +465,91 @@ margin-bottom: -5px;
 }
 
 .taskDelete:hover svg {
-  fill: crimson;
+  scale: 1.2;
 }
 
 .taskEdit:hover svg {
-  fill: blueviolet;
+  scale: 1.2;
 }
 
-#testehead {
-  margin-top: 65px;
-  padding-right: 300px;
+.taskEditInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-style: solid;
+  padding-right: 100px;
+  border-radius: 13px;
+  border-color: black;
+  background-color: lightgrey;
+  padding-left: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  overflow: auto;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  outline: none;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  border-image-slice: 1;
+}
+
+.myDay {
+  font-size: 19px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  color: rgba(245, 245, 245, 0.76);
+}
+
+.completed {
+  font-size: 19px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  color: rgba(245, 245, 245, 0.76);
+}
+
+.dateTime1 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  opacity: 0.5;
+  font-size: 1.1rem;
+  color: lightgray;
+}
+
+.dateTime2 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  opacity: 0.5;
+  font-size: 1rem;
+  color: lightgray;
+}
+
+.leadText {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  opacity: 0.8;
+  font-size: 0.9rem;
+  color: lightgray;
+  overflow-y: auto;
+}
+
+.textAbout {
+  margin-right: 30px;
+  height: 550px;
+  overflow: auto;
+}
+
+.textPrivacy {
+  margin-right: 30px;
+  height: 550px;
+  overflow: auto;
+}
+
+.textTerms {
+  margin-right: 30px;
+  height: 550px;
+  overflow: auto;
 }

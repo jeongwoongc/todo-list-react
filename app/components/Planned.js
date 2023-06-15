@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import DateTimeDisplay from "./DateTime";
 
-function List() {
+function Important() {
   const [inputValue, setInputValue] = useState("");
   const [editIndex, setEditIndex] = useState(-1);
   const [list, setList] = useState([]);
@@ -100,25 +100,25 @@ function List() {
   }, [inputValue]);
 
   useEffect(() => {
-    const data = localStorage.getItem("list");
+    const data = localStorage.getItem("plannedList");
     if (data) {
       setList(JSON.parse(data));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("list", JSON.stringify(list));
+    localStorage.setItem("plannedList", JSON.stringify(list));
   });
 
   useEffect(() => {
-    const data = localStorage.getItem("completedList");
+    const data = localStorage.getItem("plannedCompletedList");
     if (data) {
       setCompletedList(JSON.parse(data));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("completedList", JSON.stringify(completedList));
+    localStorage.setItem("plannedCompletedList", JSON.stringify(completedList));
   });
 
   useEffect(() => {
@@ -129,28 +129,16 @@ function List() {
     }
   }, [completedList]);
 
-  useEffect(() => {
-    const sidebarState = localStorage.getItem("isToggled");
-    const myForm = document.querySelector(".myForm");
-    const taskform = document.querySelector(".taskform");
-    const headingDay = document.querySelector(".headingDay");
-
-    if (sidebarState === "true") {
-      myForm.classList.add("move");
-      taskform.classList.add("move");
-      headingDay.classList.add("move");
-    }
-  });
-
   return (
     <div className="mainSection">
-      <form className="myForm" onSubmit={handleSubmit}>
-        <div className="headingDay">
+      <form className="myForm move" onSubmit={handleSubmit}>
+        <div className="headingDay move">
           <h2 className="myDay">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-sun" viewBox="0 0 16 16">
-              <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-calendar-check" viewBox="0 0 16 16">
+              <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+              <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
             </svg>{" "}
-            My Day
+            Planned
           </h2>
           <DateTimeDisplay />
           <div className="baseAdd">
@@ -229,4 +217,4 @@ function List() {
   );
 }
 
-export default List;
+export default Important;
