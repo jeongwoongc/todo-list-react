@@ -5,7 +5,7 @@ class TodoAdmin(admin.ModelAdmin):
     list_display = ('title', 'completed')
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email')
+    list_display = ('username', 'email', 'password')
     
 
 # Register your models here.

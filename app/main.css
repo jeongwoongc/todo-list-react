@@ -1,8 +1,8 @@
 body {
   margin: 0%;
   padding: 0%;
-  font-family: "Poppins", sans-serif;
   font-weight: 700;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f5f5f5;
   background: url("./background.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -65,7 +65,6 @@ body {
   border-style: none;
   box-sizing: border-box;
   padding: 5px;
-  font-family: "Poppins", sans-serif;
   font-weight: 700;
 }
 
@@ -154,11 +153,10 @@ body {
 
 .sidebar a {
   display: block;
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 16px;
   text-decoration: none;
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
+  font-weight: 100;
   color: whitesmoke;
 }
 
@@ -219,6 +217,8 @@ body {
   border-radius: 13px;
   height: 50px;
   width: calc(100% - 100px);
+  caret-color: rgba(192, 192, 192, 0.76);
+  color: rgba(192, 192, 192, 0.76);
 }
 
 .taskform.move {
@@ -285,7 +285,6 @@ body {
 #baseAddInput-addTask-today {
   flex: 1 1 auto;
   font-size: 16px;
-  font-family: "Poppins", sans-serif;
   font-weight: 700;
   padding: 10px;
   margin-right: 10px;
@@ -293,6 +292,7 @@ body {
   background-color: rgba(255, 255, 255, 0);
   width: 100%;
   border: none;
+  color: rgba(192, 192, 192, 0.76);
 }
 
 #baseAddInput-addTask-today:focus {
@@ -490,37 +490,32 @@ body {
   word-break: break-all;
   overflow-wrap: break-word;
   outline: none;
-  font-family: "Poppins", sans-serif;
   font-weight: 700;
   border-image-slice: 1;
 }
 
 .myDay {
   font-size: 19px;
-  font-family: "Poppins", sans-serif;
   font-weight: 700;
   color: rgba(245, 245, 245, 0.76);
 }
 
 .completed {
   font-size: 19px;
-  font-family: "Poppins", sans-serif;
   font-weight: 700;
   color: rgba(245, 245, 245, 0.76);
 }
 
 .dateTime1 {
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
+  font-weight: 100;
   font-style: italic;
   opacity: 0.5;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: lightgray;
 }
 
 .dateTime2 {
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
+  font-weight: 100;
   font-style: italic;
   opacity: 0.5;
   font-size: 1rem;
@@ -528,7 +523,6 @@ body {
 }
 
 .leadText {
-  font-family: "Poppins", sans-serif;
   font-weight: 700;
   opacity: 0.8;
   font-size: 0.9rem;
@@ -553,3 +547,152 @@ body {
   height: 550px;
   overflow: auto;
 }
+
+.home-guest {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  color: white;
+  padding: 20px;
+}
+
+.home-guest h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.home-guest-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #2c536498;
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+}
+
+.guest-submit {
+  appearance: none;
+  background-color: rgb(70, 70, 70);
+  border: none;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #dbdbdbd8;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 30px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  will-change: transform;
+}
+
+.guest-submit:disabled {
+  pointer-events: none;
+}
+
+.guest-submit:hover {
+  color: #fff;
+  background-color: #b13f5c;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.guest-submit:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.toggle-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  color: #dbdbdbb6;
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  outline: none;
+}
+
+.toggle-btn:hover {
+  color: #fff;
+}
+
+#username {
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px solid #dbdbdba2;
+  color: #dbdbdbd8;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  outline: none;
+}
+
+#email {
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px solid #dbdbdba2;
+  color: #dbdbdbd8;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  outline: none;
+}
+
+#password {
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px solid #dbdbdba2;
+  color: #dbdbdbd8;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  outline: none;
+}
+
+#password:focus,
+#username:focus,
+#email:focus {
+  border-bottom: 2px solid #f5f5f5;
+  transition: all 0.1s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+#password:focus::placeholder,
+#username:focus::placeholder,
+#email:focus::placeholder {
+  color: #f5f5f5;
+  transition: all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+

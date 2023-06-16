@@ -12,11 +12,12 @@ import Privacy from "./components/Privacy";
 import Important from "./components/Important";
 import Planned from "./components/Planned";
 import Profile from "./components/Profile";
+import HomeGuest from "./components/HomeGuest";
 
 function ExampleComponent() {
   return (
     <BrowserRouter>
-      <Header />
+      {/* <Header />
       <Routes>
         <Route path="/" element={<List />} />
         <Route path="/my-day" element={<List />} />
@@ -27,7 +28,8 @@ function ExampleComponent() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/my-profile" element={<Profile />} />
       </Routes>
-      <Menu />
+      <Menu /> */}
+      <HomeGuest />
     </BrowserRouter>
   );
 }
