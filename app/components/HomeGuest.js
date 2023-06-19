@@ -1,28 +1,54 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import axios, { Axios } from "axios";
 
-const HomeGuest = () => {
-  const [isLogin, setIsLogin] = useState(true);
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
+axios.defaults.withCredentials = true;
+
+const client = axios.create({
+  baseURL: "http://localhost:8000"
+});
+
+function HomeGuest() {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    client
+      .get("api/user")
+      .then(function (res) {
+        console.log("User is logged in.");
+      })
+      .catch(function (error) {
+        console.log("User is not logged in.");
+      });
+  }, []);
+
   async function handleSubmit(e) {
     e.preventDefault();
-    // Perform login or signup logic here
-    // if (isLogin) {
-    //   console.log("Email:", email);
-    //   console.log("Password:", password);
-    // } else {
-    //   console.log("Username:", username);
-    //   console.log("Email:", email);
-    //   console.log("Password:", password);
-    // }
-    try {
-      await axios.post("http://localhost:8000/api/users/", { username: "testasd", email: "test@test", password: "tes231sghfght12311" });
-      console.log("User was successfully created.");
-    } catch (e) {
-      console.log(e);
+    if (!isLogin) {
+      try {
+        await client.post("api/register", { username, email, password }).then(function (res) {
+          client.post("api/login", { email, password }).then(function (res) {
+            console.log("User was successfully created and logged in.");
+            setCurrentUser(true);
+          });
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      try {
+        await client.post("api/login", { email, password }).then(function (res) {
+          console.log("User was successfully logged in.");
+          setCurrentUser(true);
+        });
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 
@@ -34,6 +60,15 @@ const HomeGuest = () => {
     setPassword("");
   };
 
+  useEffect(() => {
+    const storedIsLogin = localStorage.getItem("isLogin") === "true";
+    setIsLogin(storedIsLogin);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("isLogin", isLogin);
+  }, [isLogin]);
+
   return (
     <div className="home-guest">
       <div className="home-guest-card">
@@ -41,9 +76,9 @@ const HomeGuest = () => {
         <form onSubmit={handleSubmit}>
           {!isLogin && <input type="text" placeholder="Username" autoComplete="off" id="username" value={username} onChange={e => setUsername(e.target.value)} />}
           <br />
-          <input type="email" placeholder="Email" id="email" value={email} onChange={e => setEmail(e.target.value)} />
+          <input type="email" placeholder="Email" autoComplete="off" id="email" value={email} onChange={e => setEmail(e.target.value)} />
           <br />
-          <input type="password" placeholder="Password" id="password" value={password} onChange={e => setPassword(e.target.value)} />
+          <input type="password" placeholder="Password" id="password" autoComplete="off" value={password} onChange={e => setPassword(e.target.value)} />
           <br />
           <br />
           <button className="guest-submit" role="button">
@@ -60,6 +95,6 @@ const HomeGuest = () => {
       </div>
     </div>
   );
-};
+}
 
 export default HomeGuest;
