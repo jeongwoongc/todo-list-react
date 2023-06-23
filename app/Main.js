@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -15,9 +15,13 @@ import Profile from "./components/Profile";
 import HomeGuest from "./components/HomeGuest";
 
 function ExampleComponent() {
+  const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("loggedIn")));
+  console.log("loggedIn: ", loggedIn);
+
   return (
     <BrowserRouter>
-      {/* <Header />
+      <HomeGuest loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
       <Routes>
         <Route path="/" element={<List />} />
         <Route path="/my-day" element={<List />} />
@@ -28,8 +32,7 @@ function ExampleComponent() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/my-profile" element={<Profile />} />
       </Routes>
-      <Menu /> */}
-      <HomeGuest />
+      <Menu loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
     </BrowserRouter>
   );
 }
