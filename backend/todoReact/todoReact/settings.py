@@ -25,11 +25,12 @@ SECRET_KEY = "django-insecure-e7(j==tg4(^9ed44njs@wqv4eogbasqmhw1f6i0w@16nbkdc&w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
+    'http://0.0.0.0',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -69,10 +70,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000"
-] 
 
 ROOT_URLCONF = "todoreact.urls"
 
