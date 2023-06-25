@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios, { Axios } from "axios";
 import Cookies from "js-cookie";
+import DispatchContext from "../DispatchContext";
+import StateContext from "../StateContext";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -11,25 +14,13 @@ const client = axios.create({
 });
 
 function HomeGuest(props) {
+  const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext);
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  useEffect(() => {
-    client
-      .get("api/user")
-      .then(function (res) {
-        console.log("User is logged in.");
-        localStorage.setItem("loggedIn", true);
-        props.setLoggedIn(true);
-      })
-      .catch(function (error) {
-        console.log("User is not logged in.");
-        localStorage.setItem("loggedIn", "");
-        props.setLoggedIn(false);
-      });
-  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -37,10 +28,12 @@ function HomeGuest(props) {
       try {
         await client.post("api/register", { username, email, password }).then(function (res) {
           client.post("api/login", { email, password }).then(function (res) {
-            console.log("User was successfully created and logged in.");
-            localStorage.setItem("csrftoken", Cookies.get("csrftoken"));
-            localStorage.setItem("loggedIn", true);
-            props.setLoggedIn(true);
+            client.get("api/user").then(function (res) {
+              appDispatch({ type: "login", data: res.data.user, secret: { ["csrftoken"]: Cookies.get("csrftoken") } });
+            });
+            console.log("User was registered and logged.");
+            navigate("/");
+            appDispatch({ type: "flashMessage", value: "You have successfully created an account and are now logged in!" });
           });
         });
       } catch (e) {
@@ -49,10 +42,13 @@ function HomeGuest(props) {
     } else {
       try {
         await client.post("api/login", { email, password }).then(function (res) {
+          client.get("api/user").then(function (res) {
+            // add in csrftoken to user object to be alwasy there even after refresh
+            appDispatch({ type: "login", data: res.data.user, secret: { ["csrftoken"]: Cookies.get("csrftoken") } });
+          });
           console.log("User was successfully logged in.");
-          localStorage.setItem("csrftoken", Cookies.get("csrftoken"));
-          localStorage.setItem("loggedIn", true);
-          props.setLoggedIn(true);
+          navigate("/");
+          appDispatch({ type: "flashMessage", value: "You have successfully logged in!" });
         });
       } catch (e) {
         console.log(e);
@@ -85,7 +81,7 @@ function HomeGuest(props) {
 
   return (
     <>
-      {props.loggedIn ? (
+      {appState.loggedIn ? (
         <></>
       ) : (
         <div className="home-guest">

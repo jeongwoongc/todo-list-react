@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import MenuButton from "./MenuShow";
 import { Link } from "react-router-dom";
 import axios, { Axios } from "axios";
+import StateContext from "../StateContext";
+import DispatchContext from "../DispatchContext";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -12,13 +14,15 @@ const client = axios.create({
 });
 
 function Header(props) {
+  const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext);
+
   function handleLogout() {
     client
       .post("api/logout")
       .then(function (res) {
         console.log("User was successfully logged out.");
-        localStorage.setItem("loggedIn", "");
-        props.setLoggedIn(false);
+        appDispatch({ type: "logout" });
       })
       .catch(function (error) {
         console.log(error);
@@ -27,7 +31,7 @@ function Header(props) {
 
   return (
     <>
-      {props.loggedIn ? (
+      {appState.loggedIn ? (
         <header>
           <div className="header-div">
             <MenuButton id="btn-menu"></MenuButton>

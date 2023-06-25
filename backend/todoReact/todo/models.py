@@ -37,3 +37,5 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
  
 	def __str__(self):
 		return self.username
+
+# new model for storing the todo items working with both completed and uncompleted lists

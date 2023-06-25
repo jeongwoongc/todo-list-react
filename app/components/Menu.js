@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import StateContext from "../StateContext";
 
 function Menu(props) {
+  const appState = useContext(StateContext);
+
   return (
     <>
-      {props.loggedIn ? (
+      {appState.loggedIn ? (
         <div className="sidebar">
           <Link to="/my-day">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="20" fill="currentColor" className="bi bi-sun" viewBox="0 0 16 16">

@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import ReactDOM from "react-dom/client";
+import { useImmerReducer } from "use-immer";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import StateContext from "./StateContext";
+import DispatchContext from "./DispatchContext";
 
 // Component Modules
 import Header from "./components/Header";
@@ -13,27 +17,71 @@ import Important from "./components/Important";
 import Planned from "./components/Planned";
 import Profile from "./components/Profile";
 import HomeGuest from "./components/HomeGuest";
+import FlashMessages from "./components/FlashMessages";
 
 function ExampleComponent() {
-  const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("loggedIn")));
-  console.log("loggedIn: ", loggedIn);
+  const initialState = {
+    loggedIn: Boolean(localStorage.getItem("loggedIn")),
+    flashMessages: [],
+    user: {
+      username: localStorage.getItem("username")
+    },
+    userSecret: {
+      csrftoken: localStorage.getItem("csrftoken")
+    }
+  };
+
+  function reducer(draft, action) {
+    switch (action.type) {
+      case "login":
+        draft.loggedIn = true;
+        draft.user = action.data;
+        draft.userSecret = action.secret;
+        return;
+      case "logout":
+        draft.loggedIn = false;
+        return;
+      case "flashMessage":
+        draft.flashMessages.push(action.value);
+        return;
+    }
+  }
+
+  const [state, dispatch] = useImmerReducer(reducer, initialState);
+
+  useEffect(() => {
+    if (state.loggedIn) {
+      localStorage.setItem("username", state.user.username);
+      localStorage.setItem("csrftoken", state.userSecret.csrftoken);
+      localStorage.setItem("loggedIn", state.loggedIn);
+    } else {
+      localStorage.removeItem("username");
+      localStorage.removeItem("csrftoken");
+      localStorage.removeItem("loggedIn");
+    }
+  }, [state.loggedIn]);
 
   return (
-    <BrowserRouter>
-      <HomeGuest loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
-      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
-      <Routes>
-        <Route path="/" element={<List />} />
-        <Route path="/my-day" element={<List />} />
-        <Route path="/important" element={<Important />} />
-        <Route path="/planned" element={<Planned />} />
-        <Route path="/about-us" element={<About />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/my-profile" element={<Profile />} />
-      </Routes>
-      <Menu loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
-    </BrowserRouter>
+    <StateContext.Provider value={state}>
+      <DispatchContext.Provider value={dispatch}>
+        <BrowserRouter>
+          <FlashMessages messages={state.flashMessages} />
+          <HomeGuest />
+          <Header />
+          <Routes>
+            <Route path="/" element={state.loggedIn ? <List /> : <></>} />
+            <Route path="/my-day" element={state.loggedIn ? <List /> : <></>} />
+            <Route path="/important" element={state.loggedIn ? <Important /> : <></>} />
+            <Route path="/planned" element={state.loggedIn ? <Planned /> : <></>} />
+            <Route path="/about-us" element={state.loggedIn ? <About /> : <></>} />
+            <Route path="/terms" element={state.loggedIn ? <Terms /> : <></>} />
+            <Route path="/privacy" element={state.loggedIn ? <Privacy /> : <></>} />
+            <Route path="/my-profile" element={state.loggedIn ? <Profile /> : <></>} />
+          </Routes>
+          <Menu />
+        </BrowserRouter>
+      </DispatchContext.Provider>
+    </StateContext.Provider>
   );
 }
 
