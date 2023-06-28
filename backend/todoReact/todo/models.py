@@ -25,6 +25,10 @@ class AppUserManager(BaseUserManager):
 		user.save()
 		return user
 
+	def delete(self, using=None, keep_parents=False):
+			# Perform any necessary cleanup or additional actions before deleting
+			super().delete(using=using, keep_parents=keep_parents)
+
 
 class AppUser(AbstractBaseUser, PermissionsMixin):
     
@@ -38,4 +42,18 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 	def __str__(self):
 		return self.username
 
-# new model for storing the todo items working with both completed and uncompleted lists
+# new model for storing the todo items 
+# the items will be given to the backend in a list 
+# and the backend will store them in the database accordingly
+
+class TodoItem(models.Model):
+	user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+	item = models.CharField(max_length=100)
+	completed = models.BooleanField(default=False)
+ 
+	def delete(self, using=None, keep_parents=False):
+		# Perform any necessary cleanup or additional actions before deleting
+		super().delete(using=using, keep_parents=keep_parents)
+
+	def __str__(self):
+		return self.item

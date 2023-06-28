@@ -3,9 +3,12 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
-from rest_framework import permissions, status
+from rest_framework import permissions, status, viewsets
 from .validations import custom_validation, validate_email, validate_password
+from todo.serializers import TodoItemSerializer
+from todo.models import TodoItem
 
+UserModel = get_user_model()
 
 class UserRegister(APIView):
 	permission_classes = (permissions.AllowAny,)
@@ -45,7 +48,20 @@ class UserLogout(APIView):
 class UserView(APIView):
 	permission_classes = (permissions.IsAuthenticated,)
 	authentication_classes = (SessionAuthentication,)
-	##
+
 	def get(self, request):
 		serializer = UserSerializer(request.user)
 		return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+
+	def delete(self, request, *args, **kwargs):
+			return self.destroy(request, *args, **kwargs)
+
+class TodoItemViewSet(viewsets.ModelViewSet):
+	serializer_class = TodoItemSerializer
+
+	def get_queryset(self):
+			user = self.request.user
+			return TodoItem.objects.filter(user=user)
+
+	def delete(self, request, *args, **kwargs):
+			return self.destroy(request, *args, **kwargs)

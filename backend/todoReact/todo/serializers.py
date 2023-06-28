@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
+from todo.models import TodoItem
 
 UserModel = get_user_model()
 
@@ -27,3 +28,19 @@ class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = UserModel
 		fields = ('email', 'username')
+  
+	def delete(self):
+		instance = self.instance
+		instance.delete()
+		return instance
+  
+class TodoItemSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = TodoItem
+		fields = '__all__'
+  
+	def update(self, instance, validated_data):
+		return super().update(instance, validated_data)
+
+	def delete(self, instance):
+		return super().delete(instance)

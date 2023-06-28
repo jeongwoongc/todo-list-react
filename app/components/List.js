@@ -21,6 +21,8 @@ function List() {
     setList([inputValue, ...list]);
     setInputValue("");
     setEditIndex(-1);
+    // when the item is added, send the current state of the item list to backend with axios
+    
   }
 
   const handleKeyDown = e => {

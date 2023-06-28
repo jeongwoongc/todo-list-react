@@ -46,6 +46,9 @@ function HomeGuest(props) {
             // add in csrftoken to user object to be alwasy there even after refresh
             appDispatch({ type: "login", data: res.data.user, secret: { ["csrftoken"]: Cookies.get("csrftoken") } });
           });
+          client.get("api/todo").then(function (res) {
+            console.log(res.data);
+          });
           console.log("User was successfully logged in.");
           navigate("/");
           appDispatch({ type: "flashMessage", value: "You have successfully logged in!" });
