@@ -1,6 +1,15 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import DateTimeDisplay from "./DateTime";
 import StateContext from "../StateContext";
+import axios from "axios";
+
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
+axios.defaults.withCredentials = true;
+
+const client = axios.create({
+  baseURL: "http://localhost:8000"
+});
 
 function List() {
   const appState = useContext(StateContext);
@@ -15,14 +24,26 @@ function List() {
     setInputValue(e.target.value);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (!inputValue) return;
     setList([inputValue, ...list]);
     setInputValue("");
     setEditIndex(-1);
     // when the item is added, send the current state of the item list to backend with axios
-    
+    // try {
+    //   await client.get("/api/user").then(response => {
+    //     console.log(response.data.user)
+    //     client.post("/api/todo", {
+    //       item: inputValue,
+    //       completed: false,
+    //       important: false,
+    //       user: response.data.user.user_id
+    //     });
+    //   });
+    // } catch (e) {
+    //   console.log(e);
+    // }
   }
 
   const handleKeyDown = e => {
@@ -70,6 +91,13 @@ function List() {
     const newList = [...list];
     newList.splice(index, 1);
     setList(newList);
+    console.log(`deleted item ${index.toString()}`);
+    // try {
+    //   client.delete(`/api/todo/${index}`);
+    //   console.log(`deleted item ${index}`);
+    // } catch (e) {
+    //   console.log(e);
+    // }
   };
 
   const handleDeleteCompleted = index => {

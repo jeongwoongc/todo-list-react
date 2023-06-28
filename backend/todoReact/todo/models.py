@@ -39,6 +39,7 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 	REQUIRED_FIELDS = ['username']
 	objects = AppUserManager()
  
+	# return both username and user id instead of only username
 	def __str__(self):
 		return self.username
 
@@ -47,9 +48,12 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 # and the backend will store them in the database accordingly
 
 class TodoItem(models.Model):
+  
+	id = models.AutoField(primary_key=True)
 	user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
 	item = models.CharField(max_length=100)
 	completed = models.BooleanField(default=False)
+	important = models.BooleanField(default=False)
  
 	def delete(self, using=None, keep_parents=False):
 		# Perform any necessary cleanup or additional actions before deleting

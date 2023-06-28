@@ -14,7 +14,6 @@ import About from "./components/About";
 import Terms from "./components/Terms";
 import Privacy from "./components/Privacy";
 import Important from "./components/Important";
-import Planned from "./components/Planned";
 import Profile from "./components/Profile";
 import HomeGuest from "./components/HomeGuest";
 import FlashMessages from "./components/FlashMessages";
@@ -24,7 +23,8 @@ function ExampleComponent() {
     loggedIn: Boolean(localStorage.getItem("loggedIn")),
     flashMessages: [],
     user: {
-      username: localStorage.getItem("username")
+      username: localStorage.getItem("username"),
+      email: localStorage.getItem("email")
     },
     userSecret: {
       csrftoken: localStorage.getItem("csrftoken")
@@ -52,10 +52,12 @@ function ExampleComponent() {
   useEffect(() => {
     if (state.loggedIn) {
       localStorage.setItem("username", state.user.username);
+      localStorage.setItem("email", state.user.email);
       localStorage.setItem("csrftoken", state.userSecret.csrftoken);
       localStorage.setItem("loggedIn", state.loggedIn);
     } else {
       localStorage.removeItem("username");
+      localStorage.removeItem("email");
       localStorage.removeItem("csrftoken");
       localStorage.removeItem("loggedIn");
     }
@@ -72,7 +74,6 @@ function ExampleComponent() {
             <Route path="/" element={state.loggedIn ? <List /> : <></>} />
             <Route path="/my-day" element={state.loggedIn ? <List /> : <></>} />
             <Route path="/important" element={state.loggedIn ? <Important /> : <></>} />
-            <Route path="/planned" element={state.loggedIn ? <Planned /> : <></>} />
             <Route path="/about-us" element={state.loggedIn ? <About /> : <></>} />
             <Route path="/terms" element={state.loggedIn ? <Terms /> : <></>} />
             <Route path="/privacy" element={state.loggedIn ? <Privacy /> : <></>} />

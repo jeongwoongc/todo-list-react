@@ -45,6 +45,7 @@ function HomeGuest(props) {
           client.get("api/user").then(function (res) {
             // add in csrftoken to user object to be alwasy there even after refresh
             appDispatch({ type: "login", data: res.data.user, secret: { ["csrftoken"]: Cookies.get("csrftoken") } });
+            console.log(res);
           });
           client.get("api/todo").then(function (res) {
             console.log(res.data);

@@ -35,6 +35,10 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+]
+
 # Application definition
 
 INSTALLED_APPS = [
