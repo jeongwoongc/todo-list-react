@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import DateTimeDisplay from "./DateTime";
 import StateContext from "../StateContext";
+import DispatchContext from "../DispatchContext";
 import axios from "axios";
 
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -13,6 +14,7 @@ const client = axios.create({
 
 function List() {
   const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext);
   const [inputValue, setInputValue] = useState("");
   const [editIndex, setEditIndex] = useState(-1);
   const [list, setList] = useState([]);
@@ -31,19 +33,19 @@ function List() {
     setInputValue("");
     setEditIndex(-1);
     // when the item is added, send the current state of the item list to backend with axios
-    // try {
-    //   await client.get("/api/user").then(response => {
-    //     console.log(response.data.user)
-    //     client.post("/api/todo", {
-    //       item: inputValue,
-    //       completed: false,
-    //       important: false,
-    //       user: response.data.user.user_id
-    //     });
-    //   });
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    try {
+      await client.get("/api/user").then(response => {
+        console.log(response.data.user);
+        client.post("/api/todo", {
+          item: inputValue,
+          completed: false,
+          important: false,
+          user: response.data.user.user_id
+        });
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   const handleKeyDown = e => {
@@ -91,13 +93,20 @@ function List() {
     const newList = [...list];
     newList.splice(index, 1);
     setList(newList);
-    console.log(`deleted item ${index.toString()}`);
-    // try {
-    //   client.delete(`/api/todo/${index}`);
-    //   console.log(`deleted item ${index}`);
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    // when the item is deleted, send the delete request with the /api/todo/:id url
+    // the url should be /api/todo/:id where id is the id of the item to be deleted
+    // the id will continue to be the same as the item is deleted and added
+    // the id will continuously increment as the item is added and deleted
+
+    try {
+      client.get("/api/todo").then(response => {
+        const backendIndex = response.data[index].id;
+        console.log(backendIndex);
+        client.delete(`/api/todo/${backendIndex}`);
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleDeleteCompleted = index => {
@@ -131,16 +140,10 @@ function List() {
     }
   }, [inputValue]);
 
-  useEffect(() => {
-    const data = localStorage.getItem("list");
-    if (data) {
-      setList(JSON.parse(data));
-    }
-  }, []);
 
-  useEffect(() => {
-    localStorage.setItem("list", JSON.stringify(list));
-  });
+  // useEffect(() => {
+  //   localStorage.setItem("list", JSON.stringify(list));
+  // });
 
   useEffect(() => {
     const data = localStorage.getItem("completedList");
@@ -217,7 +220,7 @@ function List() {
                         <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                       </svg>
                     </button>
-                    <button className="taskDelete" onClick={handleDelete}>
+                    <button className="taskDelete" onClick={() => handleDelete(index)}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
                         <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />

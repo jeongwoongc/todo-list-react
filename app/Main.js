@@ -28,7 +28,9 @@ function ExampleComponent() {
     },
     userSecret: {
       csrftoken: localStorage.getItem("csrftoken")
-    }
+    },
+    userItems: localStorage.getItem("list"),
+    Items: []
   };
 
   function reducer(draft, action) {
@@ -44,6 +46,10 @@ function ExampleComponent() {
       case "flashMessage":
         draft.flashMessages.push(action.value);
         return;
+      case "loadItems":
+        draft.userItems = JSON.stringify(action.data);
+        localStorage.setItem("list", draft.userItems);
+        return;
     }
   }
 
@@ -55,6 +61,7 @@ function ExampleComponent() {
       localStorage.setItem("email", state.user.email);
       localStorage.setItem("csrftoken", state.userSecret.csrftoken);
       localStorage.setItem("loggedIn", state.loggedIn);
+      localStorage.setItem("list", state.userItems);
     } else {
       localStorage.removeItem("username");
       localStorage.removeItem("email");
