@@ -24,7 +24,8 @@ function ExampleComponent() {
     flashMessages: [],
     user: {
       username: localStorage.getItem("username"),
-      email: localStorage.getItem("email")
+      email: localStorage.getItem("email"),
+      user_id: localStorage.getItem("userId")
     },
     userSecret: {
       csrftoken: localStorage.getItem("csrftoken")
@@ -62,6 +63,7 @@ function ExampleComponent() {
       localStorage.setItem("csrftoken", state.userSecret.csrftoken);
       localStorage.setItem("loggedIn", state.loggedIn);
       localStorage.setItem("list", state.userItems);
+      localStorage.setItem("userId", state.user.user_id);
     } else {
       localStorage.removeItem("username");
       localStorage.removeItem("email");
@@ -78,8 +80,8 @@ function ExampleComponent() {
           <HomeGuest />
           <Header />
           <Routes>
-            <Route path="/" element={state.loggedIn ? <List /> : <></>} />
-            <Route path="/my-day" element={state.loggedIn ? <List /> : <></>} />
+            <Route path="/" element={state.loggedIn ? <List items={state.userItems}/> : <></>} />
+            <Route path="/my-day" element={state.loggedIn ? <List items={state.userItems}/> : <></>} />
             <Route path="/important" element={state.loggedIn ? <Important /> : <></>} />
             <Route path="/about-us" element={state.loggedIn ? <About /> : <></>} />
             <Route path="/terms" element={state.loggedIn ? <Terms /> : <></>} />

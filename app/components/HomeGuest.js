@@ -30,11 +30,12 @@ function HomeGuest(props) {
           client.post("api/login", { email, password }).then(function (res) {
             client.get("api/user").then(function (res) {
               appDispatch({ type: "login", data: res.data.user, secret: { ["csrftoken"]: Cookies.get("csrftoken") } });
-            });
-            client.get("api/todo").then(function (res) {
-              // extract the items from the response dictionary and map them to a list
-              console.log(res.data.map(item => item["item"]));
-              appDispatch({ type: "loadItems", data: res.data.map(item => item["item"]) });
+            }).then(function (res) {
+              client.get("api/todo").then(function (res) {
+                // extract the items from the response dictionary and map them to a list
+                console.log(res.data.map(item => item["item"]));
+                appDispatch({ type: "loadItems", data: res.data.map(item => item["item"]) });
+              });
             });
             console.log("User was registered and logged.");
             navigate("/");
@@ -50,6 +51,7 @@ function HomeGuest(props) {
           client.get("api/user").then(function (res) {
             // add in csrftoken to user object to be alwasy there even after refresh
             appDispatch({ type: "login", data: res.data.user, secret: { ["csrftoken"]: Cookies.get("csrftoken") } });
+            console.log(res.data.user);
           }).then(function (res) {
             client.get("api/todo").then(function (res) {
               // extract the items from the response dictionary and map them to a list

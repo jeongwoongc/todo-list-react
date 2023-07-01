@@ -1,4 +1,13 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
+axios.defaults.withCredentials = true;
+
+const client = axios.create({
+  baseURL: "http://localhost:8000"
+});
 
 function DateTimeDisplay() {
   const [dateTime, setDateTime] = useState(new Date());
@@ -9,6 +18,11 @@ function DateTimeDisplay() {
 
     if (storedDate !== currentDate) {
       localStorage.clear();
+      client.post("api/todo/delete-all").then(response => {
+        console.log(response.data.message);
+      }).catch(error => {
+        console.log(error);
+      });
       localStorage.setItem("date", currentDate);
     }
   }, []);

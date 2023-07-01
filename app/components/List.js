@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
+import { useQuery } from "react-query";
 import DateTimeDisplay from "./DateTime";
 import StateContext from "../StateContext";
 import DispatchContext from "../DispatchContext";
@@ -12,7 +13,7 @@ const client = axios.create({
   baseURL: "http://localhost:8000"
 });
 
-function List() {
+function List(props) {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const [inputValue, setInputValue] = useState("");
@@ -55,7 +56,7 @@ function List() {
     }
   };
 
-  const handleComplete = index => {
+  async function handleComplete(index, item) {
     const newList = [...list];
     setCompletedList([newList[index], ...completedList]);
 
@@ -67,9 +68,22 @@ function List() {
 
     newList.splice(index, 1);
     setList(newList);
-  };
 
-  const handleCompleted = index => {
+    // need a new model for completed items in the backend
+
+    try {
+      const response = await client.get("/api/todo");
+      const itemId = response.data[index].id;
+
+      await client.put(`/api/todo/${itemId}/complete`, {
+        user: appState.user.user_id
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleCompleted(index, item) {
     const newCompletedList = [...completedList];
     setList([newCompletedList[index], ...list]);
     newCompletedList.splice(index, 1);
@@ -81,7 +95,23 @@ function List() {
     }
 
     setCompletedList(newCompletedList);
-  };
+
+    try {
+      await client.get("/api/todo").then(response => {
+        const backendIndex = response.data[index].id;
+        console.log(response.data[index]);
+        console.log(backendIndex);
+        client.put(`/api/todo/${backendIndex}/`, {
+          item: response.data[index].item,
+          important: response.data[index].important,
+          completed: false,
+          user: appState.user.user_id
+        });
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   const handleEdit = index => {
     if (editIndex === -1) {
@@ -89,25 +119,25 @@ function List() {
     }
   };
 
-  const handleDelete = index => {
+  async function handleDelete(index, item) {
     const newList = [...list];
     newList.splice(index, 1);
     setList(newList);
-    // when the item is deleted, send the delete request with the /api/todo/:id url
-    // the url should be /api/todo/:id where id is the id of the item to be deleted
-    // the id will continue to be the same as the item is deleted and added
-    // the id will continuously increment as the item is added and deleted
+
+    // everytime the item is deleted the index should be decremented by 1
+    // so that the index of the item in the backend matches the index of the item in the frontend
 
     try {
       client.get("/api/todo").then(response => {
         const backendIndex = response.data[index].id;
         console.log(backendIndex);
-        client.delete(`/api/todo/${backendIndex}`);
+        console.log(response.data);
+        client.delete(`/api/todo/${backendIndex}/`);
       });
     } catch (e) {
       console.log(e);
     }
-  };
+  }
 
   const handleDeleteCompleted = index => {
     index.preventDefault();
@@ -140,17 +170,22 @@ function List() {
     }
   }, [inputValue]);
 
-
-  // useEffect(() => {
-  //   localStorage.setItem("list", JSON.stringify(list));
-  // });
+  // get the data from backend and set the list state
 
   useEffect(() => {
-    const data = localStorage.getItem("completedList");
-    if (data) {
-      setCompletedList(JSON.parse(data));
-    }
+    client.get("/api/todo").then(response => {
+      const data = response.data;
+      const userItemsList = data.map(item => item.item);
+      setList(userItemsList);
+    });
   }, []);
+
+  // useEffect(() => {
+  //   const data = localStorage.getItem("completedList");
+  //   if (data) {
+  //     setCompletedList(JSON.parse(data));
+  //   }
+  // }, []);
 
   useEffect(() => {
     localStorage.setItem("completedList", JSON.stringify(completedList));
@@ -206,7 +241,7 @@ function List() {
             <ul className="lTask">
               {list.map((item, index) => (
                 <li key={index} className="iTask">
-                  <button className="baseAdd-icon addTask" type="button" aria-label="Add a task" tabIndex="0" onClick={() => handleComplete(index)}>
+                  <button className="baseAdd-icon addTask" type="button" aria-label="Add a task" tabIndex="0" onClick={() => handleComplete(index, item)}>
                     <svg className="fluentIcon ___12fm75w f1w7gpdv fez10in fg4l7m0" fill="currentColor" aria-hidden="true" width="20" height="30" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path d="M10 3a7 7 0 100 14 7 7 0 000-14zm-8 7a8 8 0 1116 0 8 8 0 01-16 0z" fill="currentColor"></path>
                       <path className="check" d="M10 2a8 8 0 110 16 8 8 0 010-16zm3.36 5.65a.5.5 0 00-.64-.06l-.07.06L9 11.3 7.35 9.65l-.07-.06a.5.5 0 00-.7.7l.07.07 2 2 .07.06c.17.11.4.11.56 0l.07-.06 4-4 .07-.08a.5.5 0 00-.06-.63z" fill="currentColor"></path>
@@ -220,7 +255,7 @@ function List() {
                         <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                       </svg>
                     </button>
-                    <button className="taskDelete" onClick={() => handleDelete(index)}>
+                    <button className="taskDelete" onClick={() => handleDelete(index, item)}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
                         <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
@@ -242,7 +277,7 @@ function List() {
                 {completedList.map((item, index) => (
                   <li key={index} className="iTaskCompleted">
                     {" "}
-                    <button className="baseAdd-icon addTask" type="button" aria-label="Add a task" tabIndex="0" onClick={() => handleCompleted(index)}>
+                    <button className="baseAdd-icon addTask" type="button" aria-label="Add a task" tabIndex="0" onClick={() => handleCompleted(index, item)}>
                       <svg className="fluentIcon ___12fm75w f1w7gpdv fez10in fg4l7m0" fill="currentColor" aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" focusable="false">
                         <path d="M10 2a8 8 0 110 16 8 8 0 010-16zm3.36 5.65a.5.5 0 00-.64-.06l-.07.06L9 11.3 7.35 9.65l-.07-.06a.5.5 0 00-.7.7l.07.07 2 2 .07.06c.17.11.4.11.56 0l.07-.06 4-4 .07-.08a.5.5 0 00-.06-.63z" fill="currentColor"></path>
                       </svg>
