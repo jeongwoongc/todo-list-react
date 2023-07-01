@@ -7,6 +7,8 @@ from rest_framework import permissions, status, viewsets
 from .validations import custom_validation, validate_email, validate_password
 from todo.serializers import TodoItemSerializer
 from todo.models import TodoItem
+from django.http import JsonResponse
+
 
 UserModel = get_user_model()
 
@@ -66,3 +68,10 @@ class TodoItemViewSet(viewsets.ModelViewSet):
 			instance = self.get_object()
 			self.perform_destroy(instance)
 			return Response(status=status.HTTP_204_NO_CONTENT)
+ 
+def delete_all_items(request):
+	if request.method == 'POST':
+			TodoItem.delete_all_items()
+			return JsonResponse({'message': 'All items deleted successfully.'})
+	else:
+			return JsonResponse({'message': 'Invalid request method.'}, status=400)

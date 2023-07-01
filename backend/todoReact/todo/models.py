@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
@@ -48,16 +49,23 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 # and the backend will store them in the database accordingly
 
 class TodoItem(models.Model):
-  
-	id = models.AutoField(primary_key=True)
+
 	user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
 	item = models.CharField(max_length=100)
 	completed = models.BooleanField(default=False)
 	important = models.BooleanField(default=False)
- 
+	created_at = models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		ordering = ['-created_at']
+
 	def delete(self, using=None, keep_parents=False):
 		# Perform any necessary cleanup or additional actions before deleting
 		super().delete(using=using, keep_parents=keep_parents)
 
 	def __str__(self):
 		return self.item
+
+	@classmethod
+	def delete_all_items(cls):
+			cls.objects.all().delete()
