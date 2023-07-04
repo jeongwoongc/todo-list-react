@@ -49,6 +49,14 @@ function List(props) {
     }
   }
 
+  async function fetchItems() {
+    await client.get("/api/todo").then(response => {
+      const data = response.data;
+      const userItemsList = data.map(item => item.item);
+      setList(userItemsList);
+    });
+  }
+
   const handleKeyDown = e => {
     if (e.key === "Enter" && inputValue.trim() === "") {
       e.preventDefault();
@@ -67,19 +75,18 @@ function List(props) {
     }
 
     newList.splice(index, 1);
-    setList(newList);
-
-    // need a new model for completed items in the backend
 
     try {
-      const response = await client.get("/api/todo");
-      const itemId = response.data[index].id;
-
-      await client.put(`/api/todo/${itemId}/complete`, {
-        user: appState.user.user_id
+      client.get("/api/todo").then(response => {
+        const backendIndex = response.data[index].id;
+        console.log(backendIndex);
+        console.log(response.data);
+        client.patch(`/api/todo/${backendIndex}/`, {
+          completed: true
+        });
       });
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.log(e);
     }
   }
 
@@ -95,22 +102,6 @@ function List(props) {
     }
 
     setCompletedList(newCompletedList);
-
-    try {
-      await client.get("/api/todo").then(response => {
-        const backendIndex = response.data[index].id;
-        console.log(response.data[index]);
-        console.log(backendIndex);
-        client.put(`/api/todo/${backendIndex}/`, {
-          item: response.data[index].item,
-          important: response.data[index].important,
-          completed: false,
-          user: appState.user.user_id
-        });
-      });
-    } catch (e) {
-      console.log(e);
-    }
   }
 
   const handleEdit = index => {
@@ -173,11 +164,7 @@ function List(props) {
   // get the data from backend and set the list state
 
   useEffect(() => {
-    client.get("/api/todo").then(response => {
-      const data = response.data;
-      const userItemsList = data.map(item => item.item);
-      setList(userItemsList);
-    });
+    fetchItems();
   }, []);
 
   // useEffect(() => {
@@ -265,37 +252,6 @@ function List(props) {
                 </li>
               ))}
             </ul>
-            {showCompleted && (
-              <ul className="lTask">
-                <h2 className="completed">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-check2-circle" viewBox="0 0 16 16">
-                    <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
-                    <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
-                  </svg>{" "}
-                  Completed
-                </h2>
-                {completedList.map((item, index) => (
-                  <li key={index} className="iTaskCompleted">
-                    {" "}
-                    <button className="baseAdd-icon addTask" type="button" aria-label="Add a task" tabIndex="0" onClick={() => handleCompleted(index, item)}>
-                      <svg className="fluentIcon ___12fm75w f1w7gpdv fez10in fg4l7m0" fill="currentColor" aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" focusable="false">
-                        <path d="M10 2a8 8 0 110 16 8 8 0 010-16zm3.36 5.65a.5.5 0 00-.64-.06l-.07.06L9 11.3 7.35 9.65l-.07-.06a.5.5 0 00-.7.7l.07.07 2 2 .07.06c.17.11.4.11.56 0l.07-.06 4-4 .07-.08a.5.5 0 00-.06-.63z" fill="currentColor"></path>
-                      </svg>
-                    </button>
-                    {item}
-                    <div className="buttonContainer">
-                      <button hidden></button>
-                      <button className="taskDelete" onClick={handleDeleteCompleted}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
-                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                          <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-                        </svg>
-                      </button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
         </div>
       </form>

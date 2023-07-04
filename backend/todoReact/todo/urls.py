@@ -10,4 +10,5 @@ urlpatterns = [
  	path('todo/<int:pk>/', views.TodoItemViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='todo-detail'),
 	path('todo', views.TodoItemViewSet.as_view({'get': 'list', 'post': 'create', 'delete': 'destroy'}), name='todo'),
 	path('todo/delete-all', delete_all_items, name='delete_all_items'),
+ 	path('todo/<int:pk>/complete/', views.TodoItemViewSet.as_view({'post': 'complete_item'}), name='complete_item'),
 ]

@@ -8,6 +8,7 @@ from .validations import custom_validation, validate_email, validate_password
 from todo.serializers import TodoItemSerializer
 from todo.models import TodoItem
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 
 
 UserModel = get_user_model()
@@ -68,7 +69,13 @@ class TodoItemViewSet(viewsets.ModelViewSet):
 			instance = self.get_object()
 			self.perform_destroy(instance)
 			return Response(status=status.HTTP_204_NO_CONTENT)
- 
+
+	def complete_item(self, request, *args, **kwargs):
+			item = self.get_object()
+			item.completed = True
+			item.save()
+			return JsonResponse({'message': 'Item completed successfully'})
+
 def delete_all_items(request):
 	if request.method == 'POST':
 			TodoItem.delete_all_items()
