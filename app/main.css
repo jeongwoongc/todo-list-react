@@ -333,7 +333,7 @@ body {
   .iTaskCompleted {
     position: relative; /* Add relative positioning */
     padding-right: 100px;
-    margin-top: 9px;
+    margin-top: 3px;
     margin-bottom: 9px;
     flex: 1 1 auto;
     display: flex;
