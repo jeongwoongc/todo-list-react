@@ -269,7 +269,7 @@ body {
 }
 
 .iTask button:hover svg path {
-  fill: black; /* Change the fill color on hover */
+  fill: lightgrey; /* Change the fill color on hover */
   animation: fillCheckMark 0.5s ease-in-out forwards; /* Apply the check mark animation on hover */
 }
 
@@ -286,7 +286,7 @@ body {
   flex: 1 1 auto;
   font-size: 16px;
   font-weight: 700;
-  padding: 10px;
+  padding: 2px;
   margin-right: 10px;
   flex-basis: 0;
   background-color: rgba(255, 255, 255, 0);
@@ -317,7 +317,8 @@ body {
     flex: 1 1 auto;
     display: flex;
     flex-basis: 0;
-    background-color: rgba(255, 255, 255, 0.384);
+    background-color: rgba(13, 84, 150, 0.466);
+    background-image: linear-gradient(to right, #ce6f8f6b, #272626a4);
     border-color: none;
     align-items: center;
     border-style: none;
@@ -328,6 +329,7 @@ body {
     overflow: auto;
     word-break: break-all;
     overflow-wrap: break-word;
+    color: rgb(170, 170, 170);
   }
 
   .iTaskCompleted {
@@ -338,7 +340,8 @@ body {
     flex: 1 1 auto;
     display: flex;
     flex-basis: 0;
-    background-color: rgba(255, 255, 255, 0.384);
+    background-color: rgba(67, 164, 255, 0.178);
+    background-image: linear-gradient(to right, #86868694, #ff276825);
     border-color: silver;
     align-items: center;
     border-style: none;
@@ -350,7 +353,7 @@ body {
     word-break: break-all;
     overflow-wrap: break-word;
     text-decoration: line-through;
-    color: #161616;
+    color: rgb(170, 170, 170);
   }
 }
 
@@ -416,17 +419,17 @@ body {
 }
 
 .iTask:hover {
-  background-image: linear-gradient(to right, #f1f1f194, #ff276825);
-  transition: all 0.15s ease-in-out;
+  background-image: linear-gradient(to right, #f196b56b, #272626a4);
+  transition: all 0.1s ease-in-out;
   transform: translate3d(-3px, -3px, 0);
   box-shadow: 3px 3px 0 0 rgba(255, 60, 118, 0.699);
 }
 
 .iTaskCompleted:hover {
-  background-image: linear-gradient(to right, #f1f1f194, #ff276825);
-  transition: all 0.15s ease-in-out;
+  background-image: linear-gradient(to right, #a3a3a394, #ff276825);
+  transition: all 0.1s ease-in-out;
   transform: translate3d(-3px, -3px, 0);
-  box-shadow: 3px 3px 0 0 rgba(255, 60, 118, 0.699);
+  box-shadow: 3px 3px 0 0 rgba(60, 255, 141, 0.699);
 }
 
 .taskContent {
@@ -435,7 +438,17 @@ body {
 
 .buttonContainer {
   position: absolute;
-  right: 15px;
+  right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.buttonContainerComplete {
+  position: absolute;
+  right: 20px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -770,4 +783,32 @@ body {
     visibility: hidden;
     transform: translateX(-50%) scale(1.2);
   }
+}
+
+.profileSet {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.profileSet li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: 1px solid #dbdbdb;
+  color: #dbdbdb;
+}
+
+.profileSet li:last-child {
+  border-bottom: none;
+}
+
+.profileSet li span {
+  color: #adadad;
+  font-size: 16px;
+  line-height: normal;
+  font-weight: 600;
 }
