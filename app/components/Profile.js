@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useContext } from "react";
 import DispatchContext from "../DispatchContext";
 import StateContext from "../StateContext";
+import { useContext } from "react";
+import DispatchContext from "../DispatchContext";
+import StateContext from "../StateContext";
 
 function Profile() {
   const appState = useContext(StateContext);
