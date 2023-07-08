@@ -1,9 +1,9 @@
 body {
   margin: 0%;
   padding: 0%;
-  font-weight: 700;
+  font-weight: 600;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f5f5;
+  background-color: darkslategray;
   background: url("./background.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -30,7 +30,6 @@ body {
 .todo-a {
   text-decoration: none;
   font-size: 1rem;
-  font-weight: bold;
   color: whitesmoke;
   margin-left: 10px;
 }
@@ -169,13 +168,6 @@ body {
   margin-left: 10%;
 }
 
-.sidebar a:hover {
-  background-image: linear-gradient(to right, #d4446f, #227b99, #2c5364);
-  border-radius: 6px;
-  transform: translate3d(5px, 5px, 0);
-  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
-}
-
 .sidebar.showinstant {
   transform: translateX(0);
   transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
@@ -265,11 +257,10 @@ body {
   stroke-dasharray: 18;
   stroke-dashoffset: 18;
   fill: transparent;
-  transition: fill 0.2s ease-in-out; /* Add a transition for the fill property */
 }
 
 .iTask button:hover svg path {
-  fill: black; /* Change the fill color on hover */
+  fill: lightgrey; /* Change the fill color on hover */
   animation: fillCheckMark 0.5s ease-in-out forwards; /* Apply the check mark animation on hover */
 }
 
@@ -285,8 +276,8 @@ body {
 #baseAddInput-addTask-today {
   flex: 1 1 auto;
   font-size: 16px;
-  font-weight: 700;
-  padding: 10px;
+  font-weight: 600;
+  padding: 0px;
   margin-right: 10px;
   flex-basis: 0;
   background-color: rgba(255, 255, 255, 0);
@@ -317,7 +308,7 @@ body {
     flex: 1 1 auto;
     display: flex;
     flex-basis: 0;
-    background-color: rgba(255, 255, 255, 0.384);
+    background-color: rgba(67, 164, 255, 0.178);
     border-color: none;
     align-items: center;
     border-style: none;
@@ -328,6 +319,7 @@ body {
     overflow: auto;
     word-break: break-all;
     overflow-wrap: break-word;
+    color: lightgrey;
   }
 
   .iTaskCompleted {
@@ -338,7 +330,7 @@ body {
     flex: 1 1 auto;
     display: flex;
     flex-basis: 0;
-    background-color: rgba(255, 255, 255, 0.384);
+    background-color: rgba(2, 3, 7, 0.733);
     border-color: silver;
     align-items: center;
     border-style: none;
@@ -350,9 +342,62 @@ body {
     word-break: break-all;
     overflow-wrap: break-word;
     text-decoration: line-through;
-    color: #161616;
+    color: lightgrey;
   }
 }
+
+@keyframes itemAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.addedTask .iTaskCompleted {
+  animation: itemAnimation 0.3s ease-in-out;
+}
+
+.addedTask .iTask {
+  animation: itemAnimation 0.3s ease-in-out;
+}
+
+
+/* similar to the above for the side bar animation*/
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidebar a {
+  padding: 10px 0px 10px 0px;
+  padding-left: 15px;
+  text-decoration: none;
+  font-size: 20px;
+  color: rgb(192, 192, 192);
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: rgba(77, 74, 74, 0.808);
+  border-radius: 6px;
+  transform: translate3d(5px, 0, 0);
+}
+
+.sidebar .active {
+  background-color: rgb(77, 74, 74);
+  border-radius: 6px;
+  transform: translate3d(5px, 0, 0);
+}
+
 
 /* width */
 ::-webkit-scrollbar {
@@ -416,17 +461,17 @@ body {
 }
 
 .iTask:hover {
-  background-image: linear-gradient(to right, #f1f1f194, #ff276825);
+  background-image: linear-gradient(to right, #5f5f5fc7, #ff276825);
   transition: all 0.15s ease-in-out;
   transform: translate3d(-3px, -3px, 0);
   box-shadow: 3px 3px 0 0 rgba(255, 60, 118, 0.699);
 }
 
 .iTaskCompleted:hover {
-  background-image: linear-gradient(to right, #f1f1f194, #ff276825);
+  background-image: linear-gradient(to right, #5f5f5fc7, #ff276825);
   transition: all 0.15s ease-in-out;
   transform: translate3d(-3px, -3px, 0);
-  box-shadow: 3px 3px 0 0 rgba(255, 60, 118, 0.699);
+  box-shadow: 3px 3px 0 0 rgba(41, 230, 141, 0.699);
 }
 
 .taskContent {
@@ -481,8 +526,8 @@ body {
   border-style: solid;
   padding-right: 100px;
   border-radius: 13px;
-  border-color: black;
-  background-color: lightgrey;
+  border-color: rgba(0, 0, 0, 0);
+  background-color: rgba(211, 211, 211, 0.534);
   padding-left: 10px;
   font-size: 16px;
   box-sizing: border-box;
@@ -491,7 +536,8 @@ body {
   overflow-wrap: break-word;
   outline: none;
   font-weight: 700;
-  border-image-slice: 1;
+  border-image-slice: 0;
+  padding-left: 48px;
 }
 
 .myDay {
@@ -699,6 +745,7 @@ body {
 .usernametxt {
   color: #dbdbdbd8;
   text-transform: capitalize;
+  text-decoration: none;
 }
 
 .floating-alert {

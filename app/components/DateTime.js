@@ -25,7 +25,7 @@ function DateTimeDisplay() {
       });
       localStorage.setItem("date", currentDate);
     }
-  }, []);
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {

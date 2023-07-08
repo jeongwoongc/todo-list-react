@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
+import { useContext } from "react";
+import DispatchContext from "../DispatchContext";
+import StateContext from "../StateContext";
 
 function Profile() {
+  const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext);
+
   useEffect(() => {
     const sidebarState = localStorage.getItem("isToggled");
     const myForm = document.querySelector(".myForm");
@@ -23,10 +29,11 @@ function Profile() {
       <div className="headingDay">
         <div className="textTerms">
           <h1>Profile</h1>
-          <ol>
-            <li>Name</li>
-            <li>Email</li>
-          </ol>
+          <ul >
+            <li>{appState.user.username}</li>
+            <li>{appState.user.email}</li>
+            <li>{appState.user.user_id}</li>
+          </ul>
         </div>
         <div className="taskform"></div>
       </div>
