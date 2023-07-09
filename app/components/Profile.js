@@ -25,7 +25,7 @@ function Profile() {
   });
 
   return (
-    <form className="myForm" style={{ color: "whitesmoke" }}>
+    <form className="myForm" style={{ color: "#fffffe" }}>
       <div className="headingDay">
         <div className="textTerms">
           <h1>Profile</h1>

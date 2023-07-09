@@ -44,6 +44,9 @@ function HomeGuest(props) {
         });
       } catch (e) {
         console.log(e);
+        if (e.response.status === 500) {
+          appDispatch({ type: "flashMessage", value: "Choose another email" });
+        }
       }
     } else {
       try {
@@ -65,6 +68,12 @@ function HomeGuest(props) {
         });
       } catch (e) {
         console.log(e);
+        if (e.response.status === 400) {
+          appDispatch({ type: "flashMessage", value: "Invalid username/password." });
+        }
+        if (e.response.status === 500) {
+          appDispatch({ type: "flashMessage", value: "Invalid username/password." });
+        }
       }
     }
   }
