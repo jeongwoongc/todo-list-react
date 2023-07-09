@@ -13,21 +13,6 @@ function DateTimeDisplay() {
   const [dateTime, setDateTime] = useState(new Date());
 
   useEffect(() => {
-    const storedDate = localStorage.getItem("date");
-    const currentDate = new Date().toLocaleDateString();
-
-    if (storedDate !== currentDate) {
-      localStorage.clear();
-      client.post("api/todo/delete-all").then(response => {
-        console.log(response.data.message);
-      }).catch(error => {
-        console.log(error);
-      });
-      localStorage.setItem("date", currentDate);
-    }
-  });
-
-  useEffect(() => {
     const interval = setInterval(() => {
       setDateTime(new Date());
       localStorage.setItem("date", dateTime.toLocaleDateString());

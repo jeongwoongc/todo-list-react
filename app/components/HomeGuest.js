@@ -99,8 +99,21 @@ function HomeGuest(props) {
     localStorage.setItem("isLogin", isLogin);
   }, [isLogin]);
 
-  // if logged in, go to privacy page directly without refreshing
+  useEffect(() => {
+    const storedDate = localStorage.getItem("date");
+    const currentDate = new Date().toLocaleDateString();
 
+    if (storedDate !== currentDate) {
+      localStorage.clear();
+      client.post("api/todo/delete-all").then(response => {
+        console.log(response.data.message);
+      }).catch(error => {
+        console.log(error);
+      });
+      localStorage.setItem("date", currentDate);
+    }
+  }, []);
+  
   return (
     <>
       {appState.loggedIn ? (
