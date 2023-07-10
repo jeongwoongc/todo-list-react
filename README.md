@@ -43,7 +43,7 @@ Fullstack todo list made with Django Rest Framework (REST API) and React.js (FRO
 - [x] User profile
 - [x] Adaptive UI
 - [x] Responsive UI
-- [x] Dockerized
+- [x] Dockerized (Frontend)
 - [x] REST API
 - [x] React.js frontend
 - [x] Django backend

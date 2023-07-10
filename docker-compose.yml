@@ -1,0 +1,20 @@
+version: '3'
+services:
+  # Create frontend container
+  frontend: # Name of our service
+    build: ./app # path to dockerfile
+    ports: # Port binding to host from docker container
+      - "3000:3000" # Bind port 3000 of host to 3000 of container
+    container_name: frontend-docker
+    restart: always # What to do if container crashes
+    links:
+      - backend
+  # Create backend container
+  backend:
+    # Create backend container  
+    build: ./backend/todoReact
+    command: python manage.py runserver localhost:8000
+    ports:
+      - "8000:8000"
+    container_name: backend-docker
+    restart: always
