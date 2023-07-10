@@ -9,6 +9,7 @@ psycopg2 = "*"
 python-decouple = "*"
 djangorestframework-simplejwt = "*"
 django-environ = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

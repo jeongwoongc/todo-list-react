@@ -22,6 +22,7 @@ function Main() {
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("loggedIn")),
     flashMessages: [],
+    flashType: null,
     user: {
       username: localStorage.getItem("username"),
       email: localStorage.getItem("email"),
@@ -40,10 +41,13 @@ function Main() {
         draft.loggedIn = true;
         draft.user = action.data;
         draft.userSecret = action.secret;
+        draft.flashType = "success";
         return;
       case "logout":
         draft.loggedIn = false;
         return;
+      case "loginError":
+        draft.flashType = "error";
       case "flashMessage":
         draft.flashMessages.push(action.value);
         return;
@@ -85,7 +89,7 @@ function Main() {
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
         <BrowserRouter>
-          <FlashMessages messages={state.flashMessages} />
+          <FlashMessages messages={state.flashMessages} flashType={state.flashType}/>
           <HomeGuest />
           <Header />
           <Routes>

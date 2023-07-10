@@ -548,7 +548,7 @@ body {
   padding-right: 100px;
   border-radius: 13px;
   border-color: rgba(0, 0, 0, 0);
-  background-color: rgba(211, 211, 211, 0.534);
+  background-color: rgba(66, 66, 66, 0.534);
   padding-left: 10px;
   font-size: 16px;
   box-sizing: border-box;
@@ -559,6 +559,7 @@ body {
   font-weight: 600;
   border-image-slice: 0;
   padding-left: 48px;
+  color: #fffffe;
 }
 
 .myDay {
@@ -777,12 +778,12 @@ body {
   font-weight: 400;
 }
 
-.floating-alert {
+.floating-alert{
   display: none;
   position: absolute;
   z-index: 999;
   top: 80%;
-  left: 10%;
+  left: 20%;
   transform: translateX(-50%);
   -moz-animation: floatingAlert cubic-bezier(0.68, -0.55, 0.265, 1.55) 3s forwards;
   -webkit-animation: floatingAlert cubic-bezier(0.68, -0.55, 0.265, 1.55) 3s forwards;
@@ -790,6 +791,29 @@ body {
   animation: floatingAlert cubic-bezier(0.68, -0.55, 0.265, 1.55) 3s forwards;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
+  background-color: rgb(0, 168, 36);
+  border-radius: 5px;
+  border-color: rgb(0, 168, 36);
+  color: #fffffe;
+}
+
+.floating-alert.error{
+  display: none;
+  position: absolute;
+  z-index: 999;
+  top: 80%;
+  left: 20%;
+  transform: translateX(-50%);
+  -moz-animation: floatingAlert cubic-bezier(0.68, -0.55, 0.265, 1.55) 3s forwards;
+  -webkit-animation: floatingAlert cubic-bezier(0.68, -0.55, 0.265, 1.55) 3s forwards;
+  -o-animation: floatingAlert cubic-bezier(0.68, -0.55, 0.265, 1.55) 3s forwards;
+  animation: floatingAlert cubic-bezier(0.68, -0.55, 0.265, 1.55) 3s forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  background-color: rgb(168, 0, 70);
+  border-radius: 5px;
+  border-color: rgb(168, 0, 70);
+  color: #fffffe;
 }
 
 .floating-alerts .floating-alert:last-of-type {

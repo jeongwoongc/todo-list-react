@@ -45,7 +45,7 @@ function HomeGuest(props) {
       } catch (e) {
         console.log(e);
         if (e.response.status === 500) {
-          appDispatch({ type: "flashMessage", value: "Choose another email" });
+          appDispatch({ type: "loginError", value: "Choose another email" });
         }
       }
     } else {
@@ -64,15 +64,15 @@ function HomeGuest(props) {
           });
           console.log("User was successfully logged in.");
           navigate("/");
-          appDispatch({ type: "flashMessage", value: "You have successfully logged in!" });
+          appDispatch({ type: "flashMessage", value: "You have successfully logged in" });
         });
       } catch (e) {
         console.log(e);
         if (e.response.status === 400) {
-          appDispatch({ type: "flashMessage", value: "Invalid username/password." });
+          appDispatch({ type: "loginError", value: "Invalid email or password" });
         }
         if (e.response.status === 500) {
-          appDispatch({ type: "flashMessage", value: "Invalid username/password." });
+          appDispatch({ type: "loginError", value: "Invalid email or password" });
         }
       }
     }
