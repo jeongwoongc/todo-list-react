@@ -9,23 +9,23 @@ Fullstack todo list made with Django Rest Framework (REST API) and React.js (FRO
 
 - **Session authentication built from scratch**
 
-![Login](login.gif)
+![Login](./extra/logincropped.gif)
 
 - **Client-side routing with secure logout**
 
-![Todo](todo.gif)
+![Todo](./extra/todo.gif)
 
 - **Django Backend with highly customized models for user/item fetch**
 
-![Backend](Backend-Interaction.gif)
+![Backend](./extra/Backend-Interaction.gif)
 
 - **Interactive Functions**
 
-![Function](functioncropped.gif)
+![Function](./extra/functioncropped.gif)
 
 - **Editable Items with real-time updates to the backend**
 
-![Edit](edit3.gif)
+![Edit](./extra/edit3.gif)
 ## Built With
 
 - [Django](https://www.djangoproject.com/)
