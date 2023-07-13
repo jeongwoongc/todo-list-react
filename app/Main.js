@@ -18,20 +18,20 @@ import Profile from "./components/Profile";
 import HomeGuest from "./components/HomeGuest";
 import FlashMessages from "./components/FlashMessages";
 
-function ExampleComponent() {
+function Main() {
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("loggedIn")),
     flashMessages: [],
     user: {
       username: localStorage.getItem("username"),
       email: localStorage.getItem("email"),
-      user_id: localStorage.getItem("userId")
+      user_id: localStorage.getItem("userId"),
+      userItems: localStorage.getItem("list")
     },
     userSecret: {
       csrftoken: localStorage.getItem("csrftoken")
     },
-    userItems: localStorage.getItem("list"),
-    Items: []
+    isSearchOpen: false
   };
 
   function reducer(draft, action) {
@@ -51,6 +51,12 @@ function ExampleComponent() {
         draft.userItems = JSON.stringify(action.data);
         localStorage.setItem("list", draft.userItems);
         return;
+      case "openSearch":
+        draft.isSearchOpen = true; 
+        return;
+      case "closeSearch":
+        draft.isSearchOpen = false;
+        return;
     }
   }
 
@@ -62,13 +68,16 @@ function ExampleComponent() {
       localStorage.setItem("email", state.user.email);
       localStorage.setItem("csrftoken", state.userSecret.csrftoken);
       localStorage.setItem("loggedIn", state.loggedIn);
-      localStorage.setItem("list", state.userItems);
+      localStorage.setItem("list", state.user.userItems);
       localStorage.setItem("userId", state.user.user_id);
     } else {
       localStorage.removeItem("username");
       localStorage.removeItem("email");
       localStorage.removeItem("csrftoken");
       localStorage.removeItem("loggedIn");
+      localStorage.removeItem("list");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("completedList");
     }
   }, [state.loggedIn]);
 
@@ -96,7 +105,7 @@ function ExampleComponent() {
 }
 
 const root = ReactDOM.createRoot(document.querySelector("#app"));
-root.render(<ExampleComponent />);
+root.render(<Main />);
 
 if (module.hot) {
   module.hot.accept();

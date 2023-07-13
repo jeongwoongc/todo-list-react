@@ -20,6 +20,7 @@ function List(props) {
   const [list, setList] = useState([]);
   const [completedList, setCompletedList] = useState([]);
   const [frontList, setFrontList] = useState([]);
+  const [importantList, setimportantList] = useState([]);
   const inputRef = useRef(null);
 
   function handleChange(e) {
@@ -61,7 +62,11 @@ function List(props) {
     await client.get("/api/todo").then(response => {
       const data = response.data;
       const userItemsList = data.map(item => item.item);
+      const completedItemsList = data.filter(item => item.completed === true).map(item => item.item);
+      const importantItemsList = data.filter(item => item.important === true).map(item => item.item);
       setList(userItemsList);
+      setCompletedList(completedItemsList);
+      setimportantList(importantItemsList);
     });
   }
 
@@ -248,8 +253,6 @@ async function handleDeleteItem (index, item) {
       myForm.classList.remove("move");
     }
   });
-
-  // check if every task is completed and send a message when last item is completed
 
   useEffect(() => {
     if (completedList.length === list.length && list.length !== 0) {

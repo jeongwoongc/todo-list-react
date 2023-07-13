@@ -23,6 +23,7 @@ function Header(props) {
       .then(function (res) {
         console.log("User was successfully logged out.");
         appDispatch({ type: "logout" });
+        appDispatch({ type: "flashMessage", value: "You have successfully logged out!" });
       })
       .catch(function (error) {
         console.log(error);

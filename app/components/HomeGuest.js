@@ -98,21 +98,6 @@ function HomeGuest(props) {
   useEffect(() => {
     localStorage.setItem("isLogin", isLogin);
   }, [isLogin]);
-
-  useEffect(() => {
-    const storedDate = localStorage.getItem("date");
-    const currentDate = new Date().toLocaleDateString();
-
-    if (storedDate !== currentDate) {
-      localStorage.clear();
-      client.post("api/todo/delete-all").then(response => {
-        console.log(response.data.message);
-      }).catch(error => {
-        console.log(error);
-      });
-      localStorage.setItem("date", currentDate);
-    }
-  }, []);
   
   return (
     <>
